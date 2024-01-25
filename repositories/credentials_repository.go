@@ -8,5 +8,6 @@ import (
 type CredentialsRepositoryInterface interface {
 	CreateCredential(ctx context.Context, credential *entities.Credential) error
 	DeleteCredential(ctx context.Context, credentialID string) error
+	UpdateCredential(ctx context.Context, credentialID string, updatedCredential *entities.Credential) error
 	GetCredentialByID(ctx context.Context, credentialID string) (*entities.Credential, error)
 }

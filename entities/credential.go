@@ -17,6 +17,7 @@ type Credential struct {
 	PasswordHash valueobjects.Password
 	Health       valueobjects.Health
 	CreatedAt    time.Time
+	UpdatedAt    time.Time
 }
 
 func NewCredential(email, password, website, owner_id string) (*Credential, error) {
@@ -35,6 +36,7 @@ func NewCredential(email, password, website, owner_id string) (*Credential, erro
 		Health:       passwordHealth,
 		PasswordHash: hashedPassword,
 		CreatedAt:    time.Now().UTC(),
+		UpdatedAt:    time.Now().UTC(),
 	}
 
 	return credential, nil
