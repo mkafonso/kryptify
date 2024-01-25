@@ -8,30 +8,30 @@ import (
 	appError "kryptify/usecases/errors"
 )
 
-type FetchCredentialsByAccountIDRequest struct {
+type FetchCredentialsByOwnerIDRequest struct {
 	RequestedByAccountID string
 }
 
-type FetchCredentialsByAccountIDResponse struct {
+type FetchCredentialsByOwnerIDResponse struct {
 	Credentials []*entities.Credential
 }
 
-type FetchCredentialsByAccountID struct {
+type FetchCredentialsByOwnerID struct {
 	accountRepo    repositories.AccountsRepositoryInterface
 	credentialRepo repositories.CredentialsRepositoryInterface
 }
 
-func NewFetchCredentialsByAccountID(
+func NewFetchCredentialsByOwnerID(
 	accountRepo repositories.AccountsRepositoryInterface,
 	credentialRepo repositories.CredentialsRepositoryInterface,
-) *FetchCredentialsByAccountID {
-	return &FetchCredentialsByAccountID{
+) *FetchCredentialsByOwnerID {
+	return &FetchCredentialsByOwnerID{
 		accountRepo:    accountRepo,
 		credentialRepo: credentialRepo,
 	}
 }
 
-func (f *FetchCredentialsByAccountID) Execute(ctx context.Context, data *FetchCredentialsByAccountIDRequest) (*FetchCredentialsByAccountIDResponse, error) {
+func (f *FetchCredentialsByOwnerID) Execute(ctx context.Context, data *FetchCredentialsByOwnerIDRequest) (*FetchCredentialsByOwnerIDResponse, error) {
 	// check if requestedByAccountID exists
 	_, err := f.accountRepo.GetAccountByID(ctx, data.RequestedByAccountID)
 	if err != nil {
@@ -44,5 +44,5 @@ func (f *FetchCredentialsByAccountID) Execute(ctx context.Context, data *FetchCr
 		return nil, errors.New("error while fetching credentials")
 	}
 
-	return &FetchCredentialsByAccountIDResponse{Credentials: credentials}, nil
+	return &FetchCredentialsByOwnerIDResponse{Credentials: credentials}, nil
 }
