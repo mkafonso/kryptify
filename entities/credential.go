@@ -19,7 +19,7 @@ type Credential struct {
 	CreatedAt time.Time
 }
 
-func NewAccount(email, password, website, owner_id string) (*Credential, error) {
+func NewCredentialt(email, password, website, owner_id string) (*Credential, error) {
 	if err := validations.ValidateCreateCredentialInput(email, password, website, owner_id); err != nil {
 		return nil, err
 	}
@@ -27,7 +27,7 @@ func NewAccount(email, password, website, owner_id string) (*Credential, error) 
 	hashedPassword := valueobjects.NewPassword(password)
 	passwordHealth := valueobjects.NewPasswordHealth(password)
 
-	account := &Credential{
+	credential := &Credential{
 		ID:        uuid.New(),
 		Email:     email,
 		Website:   website,
@@ -37,5 +37,5 @@ func NewAccount(email, password, website, owner_id string) (*Credential, error) 
 		CreatedAt: time.Now().UTC(),
 	}
 
-	return account, nil
+	return credential, nil
 }
