@@ -2,43 +2,42 @@ package usecases
 
 import (
 	"context"
-	"kryptify/entities"
+	"errors"
 	"kryptify/repositories"
 	appError "kryptify/usecases/errors"
 )
 
-type GetCredentialByIDRequest struct {
+type DeleteCredentialRequest struct {
 	TargetCredentialID, RequestedByAccountID string
 }
 
-type GetCredentialByIDResponse struct {
-	Credential *entities.Credential
+type DeleteCredentialResponse struct {
 }
 
-type GetCredentialByID struct {
+type DeleteCredential struct {
 	accountRepo    repositories.AccountsRepositoryInterface
 	credentialRepo repositories.CredentialsRepositoryInterface
 }
 
-func NewGetCredentialByID(
+func NewDeleteCredential(
 	accountRepo repositories.AccountsRepositoryInterface,
 	credentialRepo repositories.CredentialsRepositoryInterface,
-) *GetCredentialByID {
-	return &GetCredentialByID{
+) *DeleteCredential {
+	return &DeleteCredential{
 		accountRepo:    accountRepo,
 		credentialRepo: credentialRepo,
 	}
 }
 
-func (g *GetCredentialByID) Execute(ctx context.Context, data *GetCredentialByIDRequest) (*GetCredentialByIDResponse, error) {
+func (d *DeleteCredential) Execute(ctx context.Context, data *DeleteCredentialRequest) (*DeleteCredentialResponse, error) {
 	// check if requestedByAccountID exists
-	account, err := g.accountRepo.GetAccountByID(ctx, data.RequestedByAccountID)
+	account, err := d.accountRepo.GetAccountByID(ctx, data.RequestedByAccountID)
 	if err != nil {
 		return nil, appError.NewErrorAccountNotFound(data.RequestedByAccountID)
 	}
 
 	// check if credential exists
-	credential, err := g.credentialRepo.GetCredentialByID(ctx, data.TargetCredentialID)
+	credential, err := d.credentialRepo.GetCredentialByID(ctx, data.TargetCredentialID)
 	if err != nil {
 		return nil, appError.NewErrorCredentialNotFound(data.TargetCredentialID)
 	}
@@ -48,5 +47,11 @@ func (g *GetCredentialByID) Execute(ctx context.Context, data *GetCredentialByID
 		return nil, appError.NewErrorMissingPermission()
 	}
 
-	return &GetCredentialByIDResponse{Credential: credential}, nil
+	// delete the credential
+	err = d.credentialRepo.DeleteCredential(ctx, account.ID.String())
+	if err != nil {
+		return nil, errors.New("error while deleting credential")
+	}
+
+	return &DeleteCredentialResponse{}, nil
 }
