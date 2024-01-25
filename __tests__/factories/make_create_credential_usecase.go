@@ -5,7 +5,10 @@ import (
 	"kryptify/usecases"
 )
 
-func MakeCreateCredentialUseCase(credentialRepo *repository.MemoryCredentialsRepository) *usecases.CreateCredential {
-	usecase := usecases.NewCreateCredential(credentialRepo)
+func MakeCreateCredentialUseCase(
+	accountRepo *repository.MemoryAccountsRepository,
+	credentialRepo *repository.MemoryCredentialsRepository,
+) *usecases.CreateCredential {
+	usecase := usecases.NewCreateCredential(accountRepo, credentialRepo)
 	return usecase
 }
