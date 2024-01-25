@@ -19,7 +19,7 @@ type Credential struct {
 	CreatedAt time.Time
 }
 
-func NewCredentialt(email, password, website, owner_id string) (*Credential, error) {
+func NewCredential(email, password, website, owner_id string) (*Credential, error) {
 	if err := validations.ValidateCreateCredentialInput(email, password, website, owner_id); err != nil {
 		return nil, err
 	}
