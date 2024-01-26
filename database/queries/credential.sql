@@ -20,7 +20,7 @@ SET
     email = $1,
     website = $2,
     category = $3,
-    password_hash = $4,
+    password_hash = $4
 WHERE id = $5
 RETURNING *;
 
