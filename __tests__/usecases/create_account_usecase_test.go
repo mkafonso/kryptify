@@ -11,8 +11,8 @@ import (
 )
 
 func TestCreateAccountUseCase_ShouldCreateNewAccount(t *testing.T) {
-	repository := memory_repository.NewMemoryAccountsRepository()
-	usecase := factories_test.MakeCreateAccountUseCase(repository)
+	accountRepo := memory_repository.NewMemoryAccountsRepository()
+	usecase := factories_test.MakeCreateAccountUseCase(accountRepo)
 
 	request := &usecases.CreateAccountRequest{
 		Name:     "Jane Doe",
@@ -30,8 +30,8 @@ func TestCreateAccountUseCase_ShouldCreateNewAccount(t *testing.T) {
 }
 
 func TestCreateAccountUseCase_TestEmailTaken(t *testing.T) {
-	repository := memory_repository.NewMemoryAccountsRepository()
-	usecase := factories_test.MakeCreateAccountUseCase(repository)
+	accountRepo := memory_repository.NewMemoryAccountsRepository()
+	usecase := factories_test.MakeCreateAccountUseCase(accountRepo)
 
 	request := &usecases.CreateAccountRequest{
 		Name:     "Jane Doe",

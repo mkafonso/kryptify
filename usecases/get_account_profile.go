@@ -8,7 +8,7 @@ import (
 )
 
 type GetAccountProfileRequest struct {
-	TargetAccountID, RequestedByAccountID string
+	TargetAccountEmail, RequestedByAccountID string
 }
 
 type GetAccountProfileResponse struct {
@@ -31,7 +31,7 @@ func (c *GetAccountProfile) Execute(ctx context.Context, data *GetAccountProfile
 	}
 
 	// check permission
-	if data.TargetAccountID != data.RequestedByAccountID {
+	if account.Email != data.TargetAccountEmail {
 		return nil, appError.NewErrorMissingPermission()
 	}
 
