@@ -12,32 +12,17 @@ import (
 )
 
 func (r *PostgresRepository) CreateAccount(ctx context.Context, account *entities.Account) error {
-	// check if email already exists
-	existingAccount, err := r.FindAccountByEmail(ctx, account.Email)
-	if err != nil && err != sql.ErrNoRows {
-		// an error occurred while checking for the existing account
-		return err
-	}
-	if existingAccount != nil {
-		return err
-	}
-
 	params := db.CreateAccountParams{
 		Name:         account.Name,
 		Email:        account.Email,
 		PasswordHash: string(account.PasswordHash),
 	}
 
-	err = r.Queries.CreateAccount(ctx, params)
+	err := r.Queries.CreateAccount(ctx, params)
 	return err
 }
 
 func (r *PostgresRepository) UpdateAccount(ctx context.Context, email string, updatedAccount *entities.Account) error {
-	_, err := r.Queries.FindAccountByEmail(ctx, email)
-	if err != nil {
-		return err
-	}
-
 	params := db.UpdateAccountParams{
 		Name:         updatedAccount.Name,
 		PasswordHash: string(updatedAccount.PasswordHash),
@@ -46,7 +31,7 @@ func (r *PostgresRepository) UpdateAccount(ctx context.Context, email string, up
 		Email:        email,
 	}
 
-	err = r.Queries.UpdateAccount(ctx, params)
+	err := r.Queries.UpdateAccount(ctx, params)
 	return err
 }
 

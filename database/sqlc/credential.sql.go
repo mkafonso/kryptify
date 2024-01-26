@@ -8,6 +8,7 @@ package db
 import (
 	"context"
 	"database/sql"
+	"time"
 
 	"github.com/google/uuid"
 )
@@ -122,8 +123,9 @@ SET
     email = $1,
     website = $2,
     category = $3,
-    password_hash = $4
-WHERE id = $5
+    password_hash = $4,
+    updated_at = $5
+WHERE id = $6
 RETURNING id, email, website, category, owner_id, password_hash, health, created_at, updated_at
 `
 
@@ -132,11 +134,12 @@ type UpdateCredentialParams struct {
 	Website      string         `json:"website"`
 	Category     sql.NullString `json:"category"`
 	PasswordHash string         `json:"password_hash"`
+	UpdatedAt    time.Time      `json:"updated_at"`
 	ID           uuid.UUID      `json:"id"`
 }
 
 // Update a credential by ID
-// Parameters: email, website, category, password_hash, id
+// Parameters: email, website, category, password_hash, updated_at, id
 // Returns: Updated credential
 func (q *Queries) UpdateCredential(ctx context.Context, arg UpdateCredentialParams) error {
 	_, err := q.db.ExecContext(ctx, updateCredential,
@@ -144,6 +147,7 @@ func (q *Queries) UpdateCredential(ctx context.Context, arg UpdateCredentialPara
 		arg.Website,
 		arg.Category,
 		arg.PasswordHash,
+		arg.UpdatedAt,
 		arg.ID,
 	)
 	return err

@@ -12,7 +12,7 @@ RETURNING *;
 DELETE FROM credentials WHERE id = $1;
 
 -- Update a credential by ID
--- Parameters: email, website, category, password_hash, id
+-- Parameters: email, website, category, password_hash, updated_at, id
 -- Returns: Updated credential
 -- name: UpdateCredential :exec
 UPDATE credentials
@@ -20,8 +20,9 @@ SET
     email = $1,
     website = $2,
     category = $3,
-    password_hash = $4
-WHERE id = $5
+    password_hash = $4,
+    updated_at = $5
+WHERE id = $6
 RETURNING *;
 
 -- Get a credential by ID
