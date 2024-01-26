@@ -5,4 +5,7 @@ create_migration:
 sqlc:
 	sqlc generate --file sqlc.yaml
 
-.PHONY: create_migration sqlc
+evans:
+	evans --host localhost --port 8081 -r repl
+
+.PHONY: create_migration sqlc evans
