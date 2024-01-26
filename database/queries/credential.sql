@@ -38,4 +38,3 @@ LIMIT 1;
 -- name: GetCredentialsByOwnerID :many
 SELECT * FROM credentials
 WHERE owner_id = $1;
-
