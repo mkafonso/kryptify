@@ -23,15 +23,14 @@ WHERE id = $1
 LIMIT 1;
 
 -- Update an account by email
--- Parameters: name, email, avatar_url, password_hash, updated_at, email
+-- Parameters: name, avatar_url, password_hash, updated_at, email
 -- Returns: Updated account
 -- name: UpdateAccount :exec
 UPDATE accounts
 SET
     name = $1,
-    email = $2,
-    avatar_url = $3,
-    password_hash = $4,
-    updated_at = $5
-WHERE email = $6
+    avatar_url = $2,
+    password_hash = $3,
+    updated_at = $4
+WHERE email = $5
 RETURNING *;

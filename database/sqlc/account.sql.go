@@ -87,34 +87,31 @@ const updateAccount = `-- name: UpdateAccount :exec
 UPDATE accounts
 SET
     name = $1,
-    email = $2,
-    avatar_url = $3,
-    password_hash = $4,
-    updated_at = $5
-WHERE email = $6
+    avatar_url = $2,
+    password_hash = $3,
+    updated_at = $4
+WHERE email = $5
 RETURNING id, name, email, avatar_url, is_account_verified, password_hash, created_at, updated_at
 `
 
 type UpdateAccountParams struct {
 	Name         string         `json:"name"`
-	Email        string         `json:"email"`
 	AvatarUrl    sql.NullString `json:"avatar_url"`
 	PasswordHash string         `json:"password_hash"`
 	UpdatedAt    time.Time      `json:"updated_at"`
-	Email_2      string         `json:"email_2"`
+	Email        string         `json:"email"`
 }
 
 // Update an account by email
-// Parameters: name, email, avatar_url, password_hash, updated_at, email
+// Parameters: name, avatar_url, password_hash, updated_at, email
 // Returns: Updated account
 func (q *Queries) UpdateAccount(ctx context.Context, arg UpdateAccountParams) error {
 	_, err := q.db.ExecContext(ctx, updateAccount,
 		arg.Name,
-		arg.Email,
 		arg.AvatarUrl,
 		arg.PasswordHash,
 		arg.UpdatedAt,
-		arg.Email_2,
+		arg.Email,
 	)
 	return err
 }

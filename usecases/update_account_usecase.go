@@ -12,7 +12,7 @@ import (
 
 type UpdateAccountRequest struct {
 	TargetAccountID, RequestedByAccountID string
-	Name, Email, AvatarUrl, Password      string
+	Name, AvatarUrl, Password             string
 }
 
 type UpdateAccountResponse struct {
@@ -51,10 +51,6 @@ func (c *UpdateAccount) Execute(ctx context.Context, data *UpdateAccountRequest)
 func (c *UpdateAccount) updateAccountDetails(account *entities.Account, data *UpdateAccountRequest) *entities.Account {
 	if data.Name != "" {
 		account.Name = data.Name
-	}
-
-	if data.Email != "" {
-		account.Email = data.Email
 	}
 
 	if data.AvatarUrl != "" {
