@@ -43,3 +43,16 @@ func (repo *MemoryAccountsRepository) GetAccountByID(ctx context.Context, accoun
 
 	return nil, appError.NewErrorAccountNotFound(accountID)
 }
+
+func (repo *MemoryAccountsRepository) FindAccountByEmail(ctx context.Context, email string) (*entities.Account, error) {
+	repo.Lock()
+	defer repo.Unlock()
+
+	account, exists := repo.Accounts[email]
+
+	if !exists {
+		return nil, appError.NewErrorAccountNotFound(email)
+	}
+
+	return account, nil
+}
