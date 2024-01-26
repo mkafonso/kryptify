@@ -24,7 +24,7 @@ func MakeCredential(args ...string) *entities.Credential {
 
 	// default values if optional arguments are empty
 	if email == "" {
-		email = "ohn@email.com"
+		email = "john@email.com"
 	}
 	if password == "" {
 		password = "test1234"

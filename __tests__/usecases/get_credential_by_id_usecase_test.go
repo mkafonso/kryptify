@@ -10,10 +10,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestDeleteCredentialUseCase_ShouldDeleteCredential(t *testing.T) {
+func TestGetCredentialByIDUseCase_ShouldGetCredentialByID(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
 	credentialRepo := memory_repository.NewMemoryCredentialsRepository()
-	usecase := factories_test.MakeDeleteCredentialUseCase(accountRepo, credentialRepo)
+	usecase := factories_test.MakeGetCredentialByIDUseCase(accountRepo, credentialRepo)
 
 	// create an account
 	account := factories_test.MakeAccount()
@@ -23,7 +23,7 @@ func TestDeleteCredentialUseCase_ShouldDeleteCredential(t *testing.T) {
 	credential := factories_test.MakeCredential("", "", "", account.ID.String()) //make sure it's created by the same account ID
 	credentialRepo.CreateCredential(context.Background(), credential)
 
-	request := &usecases.DeleteCredentialRequest{
+	request := &usecases.GetCredentialByIDRequest{
 		TargetCredentialID:   credential.ID.String(),
 		RequestedByAccountID: account.ID.String(),
 	}
@@ -32,12 +32,14 @@ func TestDeleteCredentialUseCase_ShouldDeleteCredential(t *testing.T) {
 
 	assert.NotNil(t, response)
 	assert.NoError(t, err)
+	assert.Equal(t, "https://my-website.com", response.Credential.Website)
+	assert.Equal(t, "john@email.com", response.Credential.Email)
 }
 
-func TestDeleteCredentialUseCase_TestAccountNotFound(t *testing.T) {
+func TestGetCredentialByIDUseCase_TestAccountNotFound(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
 	credentialRepo := memory_repository.NewMemoryCredentialsRepository()
-	usecase := factories_test.MakeDeleteCredentialUseCase(accountRepo, credentialRepo)
+	usecase := factories_test.MakeGetCredentialByIDUseCase(accountRepo, credentialRepo)
 
 	// create an account
 	account := factories_test.MakeAccount()
@@ -47,7 +49,7 @@ func TestDeleteCredentialUseCase_TestAccountNotFound(t *testing.T) {
 	credential := factories_test.MakeCredential() // will be created by random accountID
 	credentialRepo.CreateCredential(context.Background(), credential)
 
-	request := &usecases.DeleteCredentialRequest{
+	request := &usecases.GetCredentialByIDRequest{
 		TargetCredentialID:   credential.ID.String(),
 		RequestedByAccountID: credential.OwnerID,
 	}
@@ -59,10 +61,10 @@ func TestDeleteCredentialUseCase_TestAccountNotFound(t *testing.T) {
 	assert.Equal(t, err.Error(), "account not found for: c92fdcdb-8e4b-4b0a-865c-bbc646a467a5")
 }
 
-func TestDeleteCredentialUseCase_TestMissingPermission(t *testing.T) {
+func TestGetCredentialByIDUseCase_TestMissingPermission(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
 	credentialRepo := memory_repository.NewMemoryCredentialsRepository()
-	usecase := factories_test.MakeDeleteCredentialUseCase(accountRepo, credentialRepo)
+	usecase := factories_test.MakeGetCredentialByIDUseCase(accountRepo, credentialRepo)
 
 	// create an account
 	account := factories_test.MakeAccount()
@@ -72,7 +74,7 @@ func TestDeleteCredentialUseCase_TestMissingPermission(t *testing.T) {
 	credential := factories_test.MakeCredential() // will be created by random accountID
 	credentialRepo.CreateCredential(context.Background(), credential)
 
-	request := &usecases.DeleteCredentialRequest{
+	request := &usecases.GetCredentialByIDRequest{
 		TargetCredentialID:   credential.ID.String(),
 		RequestedByAccountID: account.ID.String(),
 	}
