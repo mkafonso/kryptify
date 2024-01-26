@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package pb;
+
+import "proto/account.proto";
+
+option go_package = "kryptify/pb";
+
+message CreateAccountRequest {
+  string name = 1;
+  string email = 2;
+  string password = 3;
+}
+
+message CreateAccountResponse {
+  Account account = 1;
+}
