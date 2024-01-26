@@ -2,8 +2,8 @@ syntax = "proto3";
 
 package pb;
 
-import "proto/rpc_create_account.proto";
-import "proto/rpc_create_session.proto";
+import "rpc_create_account.proto";
+import "rpc_create_session.proto";
 
 option go_package = "kryptify/pb";
 

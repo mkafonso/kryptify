@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package pb;
 
-import "proto/account.proto";
+import "account.proto";
 import "google/protobuf/timestamp.proto";
 
 option go_package = "kryptify/pb";

@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v4.25.2
-// source: proto/service_kryptify.proto
+// source: service_kryptify.proto
 
 package pb
 
@@ -137,5 +137,5 @@ var KryptifyService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/service_kryptify.proto",
+	Metadata: "service_kryptify.proto",
 }
