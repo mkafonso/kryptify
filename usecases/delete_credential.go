@@ -48,7 +48,7 @@ func (d *DeleteCredential) Execute(ctx context.Context, data *DeleteCredentialRe
 	}
 
 	// delete the credential
-	err = d.credentialRepo.DeleteCredential(ctx, account.ID.String())
+	err = d.credentialRepo.DeleteCredential(ctx, data.TargetCredentialID)
 	if err != nil {
 		return nil, errors.New("error while deleting credential")
 	}
