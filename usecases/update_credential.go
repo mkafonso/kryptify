@@ -16,6 +16,7 @@ type UpdateCredentialRequest struct {
 }
 
 type UpdateCredentialResponse struct {
+	Credential *entities.Credential
 }
 
 type UpdateCredential struct {
@@ -52,12 +53,12 @@ func (u *UpdateCredential) Execute(ctx context.Context, data *UpdateCredentialRe
 	}
 
 	credentialUpdated := u.updateCredentialDetails(credential, data)
-	err = u.credentialRepo.UpdateCredential(ctx, account.Email, credentialUpdated)
+	err = u.credentialRepo.UpdateCredential(ctx, data.TargetCredentialID, credentialUpdated)
 	if err != nil {
 		return nil, errors.New("error while updating credential")
 	}
 
-	return &UpdateCredentialResponse{}, nil
+	return &UpdateCredentialResponse{Credential: credentialUpdated}, nil
 }
 
 func (u *UpdateCredential) updateCredentialDetails(credential *entities.Credential, data *UpdateCredentialRequest) *entities.Credential {
