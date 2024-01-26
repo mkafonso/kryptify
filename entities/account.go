@@ -13,10 +13,10 @@ type Account struct {
 	Name              string
 	Email             string
 	AvatarUrl         string
-	JobTitle          string
 	IsAccountVerified bool
 	PasswordHash      valueobjects.Password
 	CreatedAt         time.Time
+	UpdatedAt         time.Time
 }
 
 func NewAccount(name, email, password string) (*Account, error) {
@@ -33,6 +33,7 @@ func NewAccount(name, email, password string) (*Account, error) {
 		IsAccountVerified: false,
 		PasswordHash:      hashedPassword,
 		CreatedAt:         time.Now().UTC(),
+		UpdatedAt:         time.Now().UTC(),
 	}
 
 	return account, nil

@@ -31,6 +31,32 @@ func (repo *MemoryAccountsRepository) CreateAccount(ctx context.Context, account
 	return nil
 }
 
+func (repo *MemoryAccountsRepository) UpdateAccount(ctx context.Context, email string, updatedAccount *entities.Account) error {
+	repo.Lock()
+	defer repo.Unlock()
+
+	existingAccount, exists := repo.Accounts[email]
+	if !exists {
+		return appError.NewErrorAccountNotFound(email)
+	}
+
+	if updatedAccount.Name != "" {
+		existingAccount.Name = updatedAccount.Name
+	}
+	if updatedAccount.AvatarUrl != "" {
+		existingAccount.AvatarUrl = updatedAccount.AvatarUrl
+	}
+	if updatedAccount.Email != "" {
+		existingAccount.Email = updatedAccount.Email
+	}
+	if updatedAccount.IsAccountVerified {
+		existingAccount.IsAccountVerified = updatedAccount.IsAccountVerified
+	}
+
+	repo.Accounts[email] = existingAccount
+	return nil
+}
+
 func (repo *MemoryAccountsRepository) GetAccountByID(ctx context.Context, accountID string) (*entities.Account, error) {
 	repo.Lock()
 	defer repo.Unlock()
