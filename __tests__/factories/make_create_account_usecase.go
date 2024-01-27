@@ -1,7 +1,7 @@
 package factories_test
 
 import (
-	repository "kryptify/repositories/memory-repositories"
+	repository "kryptify/repository/memory-repository"
 	"kryptify/usecase"
 )
 

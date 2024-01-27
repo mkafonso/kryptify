@@ -3,7 +3,7 @@ package usecase_test
 import (
 	"context"
 	factories_test "kryptify/__tests__/factories"
-	memory_repository "kryptify/repositories/memory-repositories"
+	memory_repository "kryptify/repository/memory-repository"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

@@ -3,7 +3,7 @@ package gapi
 import (
 	"fmt"
 	"kryptify/pb"
-	store "kryptify/repositories/postgres-repositories"
+	store "kryptify/repository/postgres-repository"
 	"kryptify/token"
 	"kryptify/util"
 )

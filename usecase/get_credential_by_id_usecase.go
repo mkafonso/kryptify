@@ -3,7 +3,7 @@ package usecase
 import (
 	"context"
 	"kryptify/entities"
-	"kryptify/repositories"
+	"kryptify/repository"
 	appError "kryptify/usecase/errors"
 )
 
@@ -16,13 +16,13 @@ type GetCredentialByIDResponse struct {
 }
 
 type GetCredentialByID struct {
-	accountRepo    repositories.AccountsRepositoryInterface
-	credentialRepo repositories.CredentialsRepositoryInterface
+	accountRepo    repository.AccountsRepositoryInterface
+	credentialRepo repository.CredentialsRepositoryInterface
 }
 
 func NewGetCredentialByID(
-	accountRepo repositories.AccountsRepositoryInterface,
-	credentialRepo repositories.CredentialsRepositoryInterface,
+	accountRepo repository.AccountsRepositoryInterface,
+	credentialRepo repository.CredentialsRepositoryInterface,
 ) *GetCredentialByID {
 	return &GetCredentialByID{
 		accountRepo:    accountRepo,

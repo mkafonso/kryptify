@@ -3,7 +3,7 @@ package usecase
 import (
 	"context"
 	"kryptify/entities"
-	"kryptify/repositories"
+	"kryptify/repository"
 	appError "kryptify/usecase/errors"
 )
 
@@ -16,10 +16,10 @@ type GetAccountProfileResponse struct {
 }
 
 type GetAccountProfile struct {
-	accountRepo repositories.AccountsRepositoryInterface
+	accountRepo repository.AccountsRepositoryInterface
 }
 
-func NewGetAccountProfile(repo repositories.AccountsRepositoryInterface) *GetAccountProfile {
+func NewGetAccountProfile(repo repository.AccountsRepositoryInterface) *GetAccountProfile {
 	return &GetAccountProfile{accountRepo: repo}
 }
 

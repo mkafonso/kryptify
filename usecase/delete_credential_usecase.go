@@ -3,7 +3,7 @@ package usecase
 import (
 	"context"
 	"errors"
-	"kryptify/repositories"
+	"kryptify/repository"
 	appError "kryptify/usecase/errors"
 )
 
@@ -15,13 +15,13 @@ type DeleteCredentialResponse struct {
 }
 
 type DeleteCredential struct {
-	accountRepo    repositories.AccountsRepositoryInterface
-	credentialRepo repositories.CredentialsRepositoryInterface
+	accountRepo    repository.AccountsRepositoryInterface
+	credentialRepo repository.CredentialsRepositoryInterface
 }
 
 func NewDeleteCredential(
-	accountRepo repositories.AccountsRepositoryInterface,
-	credentialRepo repositories.CredentialsRepositoryInterface,
+	accountRepo repository.AccountsRepositoryInterface,
+	credentialRepo repository.CredentialsRepositoryInterface,
 ) *DeleteCredential {
 	return &DeleteCredential{
 		accountRepo:    accountRepo,

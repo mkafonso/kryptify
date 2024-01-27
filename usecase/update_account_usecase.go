@@ -5,7 +5,7 @@ import (
 	"errors"
 	"kryptify/entities"
 	valueobjects "kryptify/entities/value-objects"
-	"kryptify/repositories"
+	"kryptify/repository"
 	appError "kryptify/usecase/errors"
 	"time"
 )
@@ -20,10 +20,10 @@ type UpdateAccountResponse struct {
 }
 
 type UpdateAccount struct {
-	accountRepo repositories.AccountsRepositoryInterface
+	accountRepo repository.AccountsRepositoryInterface
 }
 
-func NewUpdateAccount(repo repositories.AccountsRepositoryInterface) *UpdateAccount {
+func NewUpdateAccount(repo repository.AccountsRepositoryInterface) *UpdateAccount {
 	return &UpdateAccount{accountRepo: repo}
 }
 

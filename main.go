@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"kryptify/gapi"
 	"kryptify/pb"
-	store "kryptify/repositories/postgres-repositories"
+	store "kryptify/repository/postgres-repository"
 	"kryptify/util"
 	"log"
 	"net"

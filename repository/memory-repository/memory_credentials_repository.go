@@ -1,4 +1,4 @@
-package memory_repositories
+package memory_repository
 
 import (
 	"context"

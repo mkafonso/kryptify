@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"kryptify/entities"
-	"kryptify/repositories"
+	"kryptify/repository"
 	appError "kryptify/usecase/errors"
 )
 
@@ -17,13 +17,13 @@ type FetchCredentialsByOwnerIDResponse struct {
 }
 
 type FetchCredentialsByOwnerID struct {
-	accountRepo    repositories.AccountsRepositoryInterface
-	credentialRepo repositories.CredentialsRepositoryInterface
+	accountRepo    repository.AccountsRepositoryInterface
+	credentialRepo repository.CredentialsRepositoryInterface
 }
 
 func NewFetchCredentialsByOwnerID(
-	accountRepo repositories.AccountsRepositoryInterface,
-	credentialRepo repositories.CredentialsRepositoryInterface,
+	accountRepo repository.AccountsRepositoryInterface,
+	credentialRepo repository.CredentialsRepositoryInterface,
 ) *FetchCredentialsByOwnerID {
 	return &FetchCredentialsByOwnerID{
 		accountRepo:    accountRepo,

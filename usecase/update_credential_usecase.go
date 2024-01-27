@@ -5,7 +5,7 @@ import (
 	"errors"
 	"kryptify/entities"
 	valueobjects "kryptify/entities/value-objects"
-	"kryptify/repositories"
+	"kryptify/repository"
 	appError "kryptify/usecase/errors"
 	"time"
 )
@@ -20,13 +20,13 @@ type UpdateCredentialResponse struct {
 }
 
 type UpdateCredential struct {
-	accountRepo    repositories.AccountsRepositoryInterface
-	credentialRepo repositories.CredentialsRepositoryInterface
+	accountRepo    repository.AccountsRepositoryInterface
+	credentialRepo repository.CredentialsRepositoryInterface
 }
 
 func NewUpdateCredential(
-	accountRepo repositories.AccountsRepositoryInterface,
-	credentialRepo repositories.CredentialsRepositoryInterface,
+	accountRepo repository.AccountsRepositoryInterface,
+	credentialRepo repository.CredentialsRepositoryInterface,
 ) *UpdateCredential {
 	return &UpdateCredential{
 		accountRepo:    accountRepo,

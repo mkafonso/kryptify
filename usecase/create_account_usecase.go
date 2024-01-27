@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"kryptify/entities"
-	"kryptify/repositories"
+	"kryptify/repository"
 	appError "kryptify/usecase/errors"
 )
 
@@ -17,10 +17,10 @@ type CreateAccountResponse struct {
 }
 
 type CreateAccount struct {
-	accountRepo repositories.AccountsRepositoryInterface
+	accountRepo repository.AccountsRepositoryInterface
 }
 
-func NewCreateAccount(repo repositories.AccountsRepositoryInterface) *CreateAccount {
+func NewCreateAccount(repo repository.AccountsRepositoryInterface) *CreateAccount {
 	return &CreateAccount{accountRepo: repo}
 }
 

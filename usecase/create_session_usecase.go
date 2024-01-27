@@ -3,7 +3,7 @@ package usecase
 import (
 	"context"
 	"kryptify/entities"
-	"kryptify/repositories"
+	"kryptify/repository"
 	"kryptify/util"
 
 	appError "kryptify/usecase/errors"
@@ -25,13 +25,13 @@ type CreateSessionResponse struct {
 }
 
 type CreateSession struct {
-	accountRepo repositories.AccountsRepositoryInterface
-	sessionRepo repositories.SessionsRepositoryInterface
+	accountRepo repository.AccountsRepositoryInterface
+	sessionRepo repository.SessionsRepositoryInterface
 }
 
 func NewCreateSession(
-	accountRepo repositories.AccountsRepositoryInterface,
-	sessionRepo repositories.SessionsRepositoryInterface,
+	accountRepo repository.AccountsRepositoryInterface,
+	sessionRepo repository.SessionsRepositoryInterface,
 ) *CreateSession {
 	return &CreateSession{
 		accountRepo: accountRepo,
