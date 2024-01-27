@@ -2,13 +2,13 @@ package factories_test
 
 import (
 	repository "kryptify/repositories/memory-repositories"
-	"kryptify/usecases"
+	"kryptify/usecase"
 )
 
 func MakeGetCredentialByIDUseCase(
 	accountRepo *repository.MemoryAccountsRepository,
 	credentialRepo *repository.MemoryCredentialsRepository,
-) *usecases.GetCredentialByID {
-	usecase := usecases.NewGetCredentialByID(accountRepo, credentialRepo)
+) *usecase.GetCredentialByID {
+	usecase := usecase.NewGetCredentialByID(accountRepo, credentialRepo)
 	return usecase
 }

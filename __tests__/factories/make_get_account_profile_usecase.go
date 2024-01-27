@@ -2,10 +2,10 @@ package factories_test
 
 import (
 	repository "kryptify/repositories/memory-repositories"
-	"kryptify/usecases"
+	"kryptify/usecase"
 )
 
-func MakeGetAccountProfileUseCase(accountRepo *repository.MemoryAccountsRepository) *usecases.GetAccountProfile {
-	usecase := usecases.NewGetAccountProfile(accountRepo)
+func MakeGetAccountProfileUseCase(accountRepo *repository.MemoryAccountsRepository) *usecase.GetAccountProfile {
+	usecase := usecase.NewGetAccountProfile(accountRepo)
 	return usecase
 }

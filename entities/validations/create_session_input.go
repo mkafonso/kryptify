@@ -1,7 +1,7 @@
 package validations
 
 import (
-	appError "kryptify/usecases/errors"
+	appError "kryptify/usecase/errors"
 	"time"
 )
 

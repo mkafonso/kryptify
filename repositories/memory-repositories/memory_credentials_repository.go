@@ -3,7 +3,7 @@ package memory_repositories
 import (
 	"context"
 	"kryptify/entities"
-	appError "kryptify/usecases/errors"
+	appError "kryptify/usecase/errors"
 	"sync"
 )
 

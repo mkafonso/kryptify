@@ -1,7 +1,7 @@
 package validations
 
 import (
-	appError "kryptify/usecases/errors"
+	appError "kryptify/usecase/errors"
 )
 
 func ValidateCreateCredentialInput(email, password, website, owner_id string) error {

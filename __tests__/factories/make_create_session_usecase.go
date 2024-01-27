@@ -2,13 +2,13 @@ package factories_test
 
 import (
 	repository "kryptify/repositories/memory-repositories"
-	"kryptify/usecases"
+	"kryptify/usecase"
 )
 
 func MakeCreateSessionUseCase(
 	accountRepo *repository.MemoryAccountsRepository,
 	sessionRepo *repository.MemorySessionsRepository,
-) *usecases.CreateSession {
-	usecase := usecases.NewCreateSession(accountRepo, sessionRepo)
+) *usecase.CreateSession {
+	usecase := usecase.NewCreateSession(accountRepo, sessionRepo)
 	return usecase
 }

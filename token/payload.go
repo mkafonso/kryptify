@@ -3,7 +3,7 @@ package token
 import (
 	"time"
 
-	appError "kryptify/usecases/errors"
+	appError "kryptify/usecase/errors"
 
 	"github.com/google/uuid"
 )

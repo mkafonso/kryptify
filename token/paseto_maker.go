@@ -2,7 +2,7 @@ package token
 
 import (
 	"fmt"
-	appError "kryptify/usecases/errors"
+	appError "kryptify/usecase/errors"
 	"time"
 
 	"github.com/google/uuid"
