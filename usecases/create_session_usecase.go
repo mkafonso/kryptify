@@ -4,7 +4,7 @@ import (
 	"context"
 	"kryptify/entities"
 	"kryptify/repositories"
-	"kryptify/utils"
+	"kryptify/util"
 
 	appError "kryptify/usecases/errors"
 	"time"
@@ -52,13 +52,13 @@ func (c *CreateSession) Execute(ctx context.Context, data *CreateSessionRequest)
 	}
 
 	// generate access token
-	accessToken, accessTokenPayload, err := utils.GenerateAccessToken(account.ID)
+	accessToken, accessTokenPayload, err := util.GenerateAccessToken(account.ID)
 	if err != nil {
 		return nil, err
 	}
 
 	// generate refresh token
-	refreshToken, refreshTokenPayload, err := utils.GenerateRefreshToken(account.ID)
+	refreshToken, refreshTokenPayload, err := util.GenerateRefreshToken(account.ID)
 	if err != nil {
 		return nil, err
 	}

@@ -5,7 +5,7 @@ import (
 	"kryptify/gapi"
 	"kryptify/pb"
 	store "kryptify/repositories/postgres-repositories"
-	"kryptify/utils"
+	"kryptify/util"
 	"log"
 	"net"
 
@@ -15,7 +15,7 @@ import (
 )
 
 func main() {
-	config, err := utils.LoadEnvironmentVariable(".")
+	config, err := util.LoadEnvironmentVariable(".")
 	if err != nil {
 		log.Fatal("cannot load environment variables", err)
 	}
@@ -30,7 +30,7 @@ func main() {
 	initGRPCServer(config, store)
 }
 
-func initGRPCServer(config utils.Config, store *store.PostgresRepository) {
+func initGRPCServer(config util.Config, store *store.PostgresRepository) {
 	server, err := gapi.NewServer(config, store)
 	if err != nil {
 		log.Fatal("cannot create server: ", err)

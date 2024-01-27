@@ -6,7 +6,7 @@ import (
 	db "kryptify/db/sqlc"
 	"kryptify/entities"
 	valueobjects "kryptify/entities/value-objects"
-	"kryptify/utils"
+	"kryptify/util"
 
 	"github.com/google/uuid"
 )
@@ -52,7 +52,7 @@ func (r *PostgresRepository) GetCredentialByID(ctx context.Context, credentialID
 		ID:           credential.ID,
 		Email:        credential.Email,
 		Website:      credential.Website,
-		Category:     utils.GetStringValue(credential.Category),
+		Category:     util.GetStringValue(credential.Category),
 		OwnerID:      credential.OwnerID.String(),
 		PasswordHash: valueobjects.Password(credential.PasswordHash),
 		Health:       valueobjects.Health(credential.Health),
@@ -75,7 +75,7 @@ func (r *PostgresRepository) GetCredentialsByOwnerID(ctx context.Context, ownerI
 			ID:           credential.ID,
 			Email:        credential.Email,
 			Website:      credential.Website,
-			Category:     utils.GetStringValue(credential.Category),
+			Category:     util.GetStringValue(credential.Category),
 			OwnerID:      credential.OwnerID.String(),
 			PasswordHash: valueobjects.Password(credential.PasswordHash),
 			Health:       valueobjects.Health(credential.Health),

@@ -5,7 +5,7 @@ import (
 	"kryptify/pb"
 	store "kryptify/repositories/postgres-repositories"
 	"kryptify/token"
-	"kryptify/utils"
+	"kryptify/util"
 )
 
 type Server struct {
@@ -14,8 +14,8 @@ type Server struct {
 	store      *store.PostgresRepository
 }
 
-func NewServer(config utils.Config, store *store.PostgresRepository) (*Server, error) {
-	tokenSymmetricKey := "12345678123456781234567812345678"
+func NewServer(config util.Config, store *store.PostgresRepository) (*Server, error) {
+	tokenSymmetricKey := config.TOKEN_SYMETRIC_KEY
 	tokenMaker, err := token.NewPasetoMaker(tokenSymmetricKey)
 	if err != nil {
 		return nil, fmt.Errorf("cannot create token maker: %w", err)

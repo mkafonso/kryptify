@@ -6,7 +6,7 @@ import (
 	db "kryptify/db/sqlc"
 	"kryptify/entities"
 	valueobjects "kryptify/entities/value-objects"
-	"kryptify/utils"
+	"kryptify/util"
 
 	"github.com/google/uuid"
 )
@@ -45,7 +45,7 @@ func (r *PostgresRepository) GetAccountByID(ctx context.Context, accountID strin
 		ID:                account.ID,
 		Name:              account.Name,
 		Email:             account.Email,
-		AvatarUrl:         utils.GetStringValue(account.AvatarUrl),
+		AvatarUrl:         util.GetStringValue(account.AvatarUrl),
 		IsAccountVerified: account.IsAccountVerified.Valid && account.IsAccountVerified.Bool,
 		PasswordHash:      valueobjects.Password(account.PasswordHash),
 		CreatedAt:         account.CreatedAt,
@@ -63,7 +63,7 @@ func (r *PostgresRepository) FindAccountByEmail(ctx context.Context, email strin
 		ID:                account.ID,
 		Name:              account.Name,
 		Email:             account.Email,
-		AvatarUrl:         utils.GetStringValue(account.AvatarUrl),
+		AvatarUrl:         util.GetStringValue(account.AvatarUrl),
 		IsAccountVerified: account.IsAccountVerified.Valid && account.IsAccountVerified.Bool,
 		PasswordHash:      valueobjects.Password(account.PasswordHash),
 		CreatedAt:         account.CreatedAt,
