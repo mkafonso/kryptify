@@ -1,6 +1,7 @@
 package entity_test
 
 import (
+	"kryptify/entity"
 	"testing"
 	"time"
 

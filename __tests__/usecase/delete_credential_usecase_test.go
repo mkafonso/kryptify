@@ -4,6 +4,7 @@ import (
 	"context"
 	factory_test "kryptify/__tests__/factory"
 	memory_repository "kryptify/repository/memory-repository"
+	"kryptify/usecase"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -12,7 +13,7 @@ import (
 func TestDeleteCredentialUseCase_ShouldDeleteCredential(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
 	credentialRepo := memory_repository.NewMemoryCredentialsRepository()
-	usecase := factory_test.MakeDeleteCredentialUseCase(accountRepo, credentialRepo)
+	uc := factory_test.MakeDeleteCredentialUseCase(accountRepo, credentialRepo)
 
 	// create an account
 	account := factory_test.MakeAccount()
@@ -27,7 +28,7 @@ func TestDeleteCredentialUseCase_ShouldDeleteCredential(t *testing.T) {
 		RequestedByAccountID: account.ID.String(),
 	}
 
-	response, err := usecase.Execute(context.Background(), request)
+	response, err := uc.Execute(context.Background(), request)
 
 	assert.NotNil(t, response)
 	assert.NoError(t, err)
@@ -36,7 +37,7 @@ func TestDeleteCredentialUseCase_ShouldDeleteCredential(t *testing.T) {
 func TestDeleteCredentialUseCase_TestAccountNotFound(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
 	credentialRepo := memory_repository.NewMemoryCredentialsRepository()
-	usecase := factory_test.MakeDeleteCredentialUseCase(accountRepo, credentialRepo)
+	uc := factory_test.MakeDeleteCredentialUseCase(accountRepo, credentialRepo)
 
 	// create an account
 	account := factory_test.MakeAccount()
@@ -51,7 +52,7 @@ func TestDeleteCredentialUseCase_TestAccountNotFound(t *testing.T) {
 		RequestedByAccountID: credential.OwnerID,
 	}
 
-	response, err := usecase.Execute(context.Background(), request)
+	response, err := uc.Execute(context.Background(), request)
 
 	assert.Error(t, err)
 	assert.Nil(t, response)
@@ -61,7 +62,7 @@ func TestDeleteCredentialUseCase_TestAccountNotFound(t *testing.T) {
 func TestDeleteCredentialUseCase_TestMissingPermission(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
 	credentialRepo := memory_repository.NewMemoryCredentialsRepository()
-	usecase := factory_test.MakeDeleteCredentialUseCase(accountRepo, credentialRepo)
+	uc := factory_test.MakeDeleteCredentialUseCase(accountRepo, credentialRepo)
 
 	// create an account
 	account := factory_test.MakeAccount()
@@ -76,7 +77,7 @@ func TestDeleteCredentialUseCase_TestMissingPermission(t *testing.T) {
 		RequestedByAccountID: account.ID.String(),
 	}
 
-	response, err := usecase.Execute(context.Background(), request)
+	response, err := uc.Execute(context.Background(), request)
 
 	assert.Error(t, err)
 	assert.Nil(t, response)

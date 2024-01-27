@@ -4,6 +4,7 @@ import (
 	"context"
 	factory_test "kryptify/__tests__/factory"
 	memory_repository "kryptify/repository/memory-repository"
+	"kryptify/usecase"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -11,7 +12,7 @@ import (
 
 func TestGetAccountProfileUseCase_ShouldGetTheProfile(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
-	usecase := factory_test.MakeGetAccountProfileUseCase(accountRepo)
+	uc := factory_test.MakeGetAccountProfileUseCase(accountRepo)
 
 	// create an account
 	account := factory_test.MakeAccount() // jane@email.com
@@ -22,7 +23,7 @@ func TestGetAccountProfileUseCase_ShouldGetTheProfile(t *testing.T) {
 		RequestedByAccountID: account.ID.String(),
 	}
 
-	response, err := usecase.Execute(context.Background(), request)
+	response, err := uc.Execute(context.Background(), request)
 
 	assert.NotNil(t, response)
 	assert.NoError(t, err)
@@ -31,7 +32,7 @@ func TestGetAccountProfileUseCase_ShouldGetTheProfile(t *testing.T) {
 
 func TestGetAccountProfileUseCase_TestAccountNotFound(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
-	usecase := factory_test.MakeGetAccountProfileUseCase(accountRepo)
+	uc := factory_test.MakeGetAccountProfileUseCase(accountRepo)
 
 	// create an account
 	account := factory_test.MakeAccount() // jane@email.com
@@ -42,7 +43,7 @@ func TestGetAccountProfileUseCase_TestAccountNotFound(t *testing.T) {
 		RequestedByAccountID: "c92fdcdb-8e4b-4b0a-865c-bbc646a467a5", // wrong account
 	}
 
-	response, err := usecase.Execute(context.Background(), request)
+	response, err := uc.Execute(context.Background(), request)
 
 	assert.Error(t, err)
 	assert.Nil(t, response)
@@ -51,7 +52,7 @@ func TestGetAccountProfileUseCase_TestAccountNotFound(t *testing.T) {
 
 func TestGetAccountProfileUseCase_TestMissingPermission(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
-	usecase := factory_test.MakeGetAccountProfileUseCase(accountRepo)
+	uc := factory_test.MakeGetAccountProfileUseCase(accountRepo)
 
 	// create an account
 	account := factory_test.MakeAccount() // jane@email.com
@@ -62,7 +63,7 @@ func TestGetAccountProfileUseCase_TestMissingPermission(t *testing.T) {
 		RequestedByAccountID: account.ID.String(),
 	}
 
-	response, err := usecase.Execute(context.Background(), request)
+	response, err := uc.Execute(context.Background(), request)
 
 	assert.Error(t, err)
 	assert.Nil(t, response)

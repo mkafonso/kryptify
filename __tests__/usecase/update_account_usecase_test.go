@@ -4,6 +4,7 @@ import (
 	"context"
 	factory_test "kryptify/__tests__/factory"
 	memory_repository "kryptify/repository/memory-repository"
+	"kryptify/usecase"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -11,7 +12,7 @@ import (
 
 func TestUpdateAccountUseCase_ShouldUpdateAccount(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
-	usecase := factory_test.MakeUpdateAccountUseCase(accountRepo)
+	uc := factory_test.MakeUpdateAccountUseCase(accountRepo)
 
 	// create an account
 	account := factory_test.MakeAccount() // jane@email.com
@@ -25,7 +26,7 @@ func TestUpdateAccountUseCase_ShouldUpdateAccount(t *testing.T) {
 		Name:                 "Jane Smith Doe",
 	}
 
-	response, err := usecase.Execute(context.Background(), request)
+	response, err := uc.Execute(context.Background(), request)
 
 	assert.NotNil(t, response)
 	assert.NoError(t, err)
@@ -34,7 +35,7 @@ func TestUpdateAccountUseCase_ShouldUpdateAccount(t *testing.T) {
 
 func TestUpdateAccountUseCase_CheckUpdatedAtDate(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
-	usecase := factory_test.MakeUpdateAccountUseCase(accountRepo)
+	uc := factory_test.MakeUpdateAccountUseCase(accountRepo)
 
 	// create an account
 	account := factory_test.MakeAccount() // jane@email.com
@@ -48,7 +49,7 @@ func TestUpdateAccountUseCase_CheckUpdatedAtDate(t *testing.T) {
 		Name:                 "Jane Smith Doe",
 	}
 
-	response, err := usecase.Execute(context.Background(), request)
+	response, err := uc.Execute(context.Background(), request)
 	assert.NotNil(t, response)
 	assert.NoError(t, err)
 	assert.True(t, response.Account.UpdatedAt.After(account.CreatedAt))
@@ -56,7 +57,7 @@ func TestUpdateAccountUseCase_CheckUpdatedAtDate(t *testing.T) {
 
 func TestUpdateAccountUseCase_TestAccountNotFound(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
-	usecase := factory_test.MakeUpdateAccountUseCase(accountRepo)
+	uc := factory_test.MakeUpdateAccountUseCase(accountRepo)
 
 	// create an account
 	account := factory_test.MakeAccount() // jane@email.com
@@ -68,7 +69,7 @@ func TestUpdateAccountUseCase_TestAccountNotFound(t *testing.T) {
 		Name:                 "Jane Smith Doe",
 	}
 
-	response, err := usecase.Execute(context.Background(), request)
+	response, err := uc.Execute(context.Background(), request)
 
 	assert.Error(t, err)
 	assert.Nil(t, response)
@@ -77,7 +78,7 @@ func TestUpdateAccountUseCase_TestAccountNotFound(t *testing.T) {
 
 func TestUpdateAccountUseCase_TestMissingPermission(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
-	usecase := factory_test.MakeUpdateAccountUseCase(accountRepo)
+	uc := factory_test.MakeUpdateAccountUseCase(accountRepo)
 
 	// create an account
 	account := factory_test.MakeAccount() // jane@email.com
@@ -89,7 +90,7 @@ func TestUpdateAccountUseCase_TestMissingPermission(t *testing.T) {
 		Name:                 "Jane Smith Doe",
 	}
 
-	response, err := usecase.Execute(context.Background(), request)
+	response, err := uc.Execute(context.Background(), request)
 
 	assert.Error(t, err)
 	assert.Nil(t, response)

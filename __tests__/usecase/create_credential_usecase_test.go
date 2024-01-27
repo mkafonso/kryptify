@@ -4,6 +4,7 @@ import (
 	"context"
 	factory_test "kryptify/__tests__/factory"
 	memory_repository "kryptify/repository/memory-repository"
+	"kryptify/usecase"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -12,7 +13,7 @@ import (
 func TestCreateCredentialUseCase_ShouldCreateNewCredential(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
 	credentialRepo := memory_repository.NewMemoryCredentialsRepository()
-	usecase := factory_test.MakeCreateCredentialUseCase(accountRepo, credentialRepo)
+	uc := factory_test.MakeCreateCredentialUseCase(accountRepo, credentialRepo)
 
 	// create an account
 	account := factory_test.MakeAccount() // jane@email.com
@@ -25,7 +26,7 @@ func TestCreateCredentialUseCase_ShouldCreateNewCredential(t *testing.T) {
 		RequestedByAccountID: account.ID.String(),
 	}
 
-	response, err := usecase.Execute(context.Background(), request)
+	response, err := uc.Execute(context.Background(), request)
 
 	assert.NotNil(t, response)
 	assert.NoError(t, err)
@@ -37,7 +38,7 @@ func TestCreateCredentialUseCase_ShouldCreateNewCredential(t *testing.T) {
 func TestCreateCredentialUseCase_TestAccountNotFound(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
 	credentialRepo := memory_repository.NewMemoryCredentialsRepository()
-	usecase := factory_test.MakeCreateCredentialUseCase(accountRepo, credentialRepo)
+	uc := factory_test.MakeCreateCredentialUseCase(accountRepo, credentialRepo)
 
 	request := &usecase.CreateCredentialRequest{
 		Email:                "jane.doe@email.com",
@@ -46,7 +47,7 @@ func TestCreateCredentialUseCase_TestAccountNotFound(t *testing.T) {
 		RequestedByAccountID: "c92fdcdb-8e4b-4b0a-865c-bbc646a467a5", // wrong account
 	}
 
-	response, err := usecase.Execute(context.Background(), request)
+	response, err := uc.Execute(context.Background(), request)
 
 	assert.Error(t, err)
 	assert.Nil(t, response)

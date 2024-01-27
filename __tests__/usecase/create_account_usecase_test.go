@@ -4,6 +4,7 @@ import (
 	"context"
 	factory_test "kryptify/__tests__/factory"
 	memory_repository "kryptify/repository/memory-repository"
+	"kryptify/usecase"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -11,7 +12,7 @@ import (
 
 func TestCreateAccountUseCase_ShouldCreateNewAccount(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
-	usecase := factory_test.MakeCreateAccountUseCase(accountRepo)
+	uc := factory_test.MakeCreateAccountUseCase(accountRepo)
 
 	request := &usecase.CreateAccountRequest{
 		Name:     "Jane Doe",
@@ -19,7 +20,7 @@ func TestCreateAccountUseCase_ShouldCreateNewAccount(t *testing.T) {
 		Password: "myVerySecurePassword",
 	}
 
-	response, err := usecase.Execute(context.Background(), request)
+	response, err := uc.Execute(context.Background(), request)
 
 	assert.NotNil(t, response)
 	assert.NoError(t, err)
@@ -30,7 +31,7 @@ func TestCreateAccountUseCase_ShouldCreateNewAccount(t *testing.T) {
 
 func TestCreateAccountUseCase_TestEmailTaken(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
-	usecase := factory_test.MakeCreateAccountUseCase(accountRepo)
+	uc := factory_test.MakeCreateAccountUseCase(accountRepo)
 
 	request := &usecase.CreateAccountRequest{
 		Name:     "Jane Doe",
@@ -38,8 +39,8 @@ func TestCreateAccountUseCase_TestEmailTaken(t *testing.T) {
 		Password: "myVerySecurePassword",
 	}
 
-	usecase.Execute(context.Background(), request) // email already taken
-	response, err := usecase.Execute(context.Background(), request)
+	uc.Execute(context.Background(), request) // email already taken
+	response, err := uc.Execute(context.Background(), request)
 
 	assert.Error(t, err)
 	assert.Nil(t, response)

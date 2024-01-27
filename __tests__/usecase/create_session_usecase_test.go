@@ -4,6 +4,7 @@ import (
 	"context"
 	factory_test "kryptify/__tests__/factory"
 	memory_repository "kryptify/repository/memory-repository"
+	"kryptify/usecase"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -12,7 +13,7 @@ import (
 func TestCreateSessionUseCase_ShouldCreateSession(t *testing.T) {
 	accountsRepo := memory_repository.NewMemoryAccountsRepository()
 	sessionsRepo := memory_repository.NewMemorySessionsRepository()
-	usecase := factory_test.MakeCreateSessionUseCase(accountsRepo, sessionsRepo)
+	uc := factory_test.MakeCreateSessionUseCase(accountsRepo, sessionsRepo)
 
 	// create an account
 	account := factory_test.MakeAccount() // jane@email.com
@@ -25,7 +26,7 @@ func TestCreateSessionUseCase_ShouldCreateSession(t *testing.T) {
 		ClientIP:  "valid-client-ip",
 	}
 
-	response, err := usecase.Execute(context.Background(), request)
+	response, err := uc.Execute(context.Background(), request)
 	assert.NoError(t, err)
 	assert.NotNil(t, response)
 	assert.NotEmpty(t, response.AccessToken)
@@ -40,7 +41,7 @@ func TestCreateSessionUseCase_ShouldCreateSession(t *testing.T) {
 func TestCreateSessionUseCase_TestWrongEmailAddress(t *testing.T) {
 	accountsRepo := memory_repository.NewMemoryAccountsRepository()
 	sessionsRepo := memory_repository.NewMemorySessionsRepository()
-	usecase := factory_test.MakeCreateSessionUseCase(accountsRepo, sessionsRepo)
+	uc := factory_test.MakeCreateSessionUseCase(accountsRepo, sessionsRepo)
 
 	// create an account
 	account := factory_test.MakeAccount() // jane@email.com
@@ -53,7 +54,7 @@ func TestCreateSessionUseCase_TestWrongEmailAddress(t *testing.T) {
 		ClientIP:  "valid-client-ip",
 	}
 
-	response, err := usecase.Execute(context.Background(), request)
+	response, err := uc.Execute(context.Background(), request)
 	assert.Error(t, err)
 	assert.Nil(t, response)
 	assert.Equal(t, err.Error(), "invalid credentials")
@@ -62,7 +63,7 @@ func TestCreateSessionUseCase_TestWrongEmailAddress(t *testing.T) {
 func TestCreateSessionUseCase_TestWrongPassword(t *testing.T) {
 	accountsRepo := memory_repository.NewMemoryAccountsRepository()
 	sessionsRepo := memory_repository.NewMemorySessionsRepository()
-	usecase := factory_test.MakeCreateSessionUseCase(accountsRepo, sessionsRepo)
+	uc := factory_test.MakeCreateSessionUseCase(accountsRepo, sessionsRepo)
 
 	// create an account
 	account := factory_test.MakeAccount() // jane@email.com
@@ -75,7 +76,7 @@ func TestCreateSessionUseCase_TestWrongPassword(t *testing.T) {
 		ClientIP:  "valid-client-ip",
 	}
 
-	response, err := usecase.Execute(context.Background(), request)
+	response, err := uc.Execute(context.Background(), request)
 	assert.Error(t, err)
 	assert.Nil(t, response)
 	assert.Equal(t, err.Error(), "invalid credentials")
