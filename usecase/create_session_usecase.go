@@ -2,11 +2,11 @@ package usecase
 
 import (
 	"context"
-	"kryptify/entities"
+	"kryptify/entity"
 	"kryptify/repository"
 	"kryptify/util"
 
-	appError "kryptify/usecase/errors"
+	appError "kryptify/usecase/error"
 	"time"
 )
 
@@ -16,7 +16,7 @@ type CreateSessionRequest struct {
 }
 
 type CreateSessionResponse struct {
-	Account               *entities.Account
+	Account               *entity.Account
 	SessionID             string
 	AccessToken           string
 	AccessTokenExpiresAt  time.Time
@@ -64,7 +64,7 @@ func (c *CreateSession) Execute(ctx context.Context, data *CreateSessionRequest)
 	}
 
 	// save the new session
-	_, err = c.sessionRepo.CreateSession(ctx, &entities.Session{
+	_, err = c.sessionRepo.CreateSession(ctx, &entity.Session{
 		ID:           refreshTokenPayload.ID,
 		ExpiresAt:    refreshTokenPayload.ExpiredAt,
 		AccountID:    account.ID.String(),

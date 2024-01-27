@@ -1,8 +1,8 @@
-package factories_test
+package factory_test
 
-import "kryptify/entities"
+import "kryptify/entity"
 
-func MakeCredential(args ...string) *entities.Credential {
+func MakeCredential(args ...string) *entity.Credential {
 	var email, password, website, owner_id string
 
 	// handle optional arguments
@@ -36,7 +36,7 @@ func MakeCredential(args ...string) *entities.Credential {
 		owner_id = "c92fdcdb-8e4b-4b0a-865c-bbc646a467a5"
 	}
 
-	credential, err := entities.NewCredential(email, password, website, owner_id)
+	credential, err := entity.NewCredential(email, password, website, owner_id)
 	if err != nil {
 		return nil
 	}

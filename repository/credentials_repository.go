@@ -2,13 +2,13 @@ package repository
 
 import (
 	"context"
-	"kryptify/entities"
+	"kryptify/entity"
 )
 
 type CredentialsRepositoryInterface interface {
-	CreateCredential(ctx context.Context, credential *entities.Credential) error
+	CreateCredential(ctx context.Context, credential *entity.Credential) error
 	DeleteCredential(ctx context.Context, credentialID string) error
-	UpdateCredential(ctx context.Context, credentialID string, updatedCredential *entities.Credential) error
-	GetCredentialByID(ctx context.Context, credentialID string) (*entities.Credential, error)
-	GetCredentialsByOwnerID(ctx context.Context, ownerID string) ([]*entities.Credential, error)
+	UpdateCredential(ctx context.Context, credentialID string, updatedCredential *entity.Credential) error
+	GetCredentialByID(ctx context.Context, credentialID string) (*entity.Credential, error)
+	GetCredentialsByOwnerID(ctx context.Context, ownerID string) ([]*entity.Credential, error)
 }

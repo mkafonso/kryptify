@@ -3,10 +3,10 @@ package usecase
 import (
 	"context"
 	"errors"
-	"kryptify/entities"
-	valueobjects "kryptify/entities/value-objects"
+	"kryptify/entity"
+	valueobject "kryptify/entity/value-object"
 	"kryptify/repository"
-	appError "kryptify/usecase/errors"
+	appError "kryptify/usecase/error"
 	"time"
 )
 
@@ -16,7 +16,7 @@ type UpdateCredentialRequest struct {
 }
 
 type UpdateCredentialResponse struct {
-	Credential *entities.Credential
+	Credential *entity.Credential
 }
 
 type UpdateCredential struct {
@@ -61,7 +61,7 @@ func (u *UpdateCredential) Execute(ctx context.Context, data *UpdateCredentialRe
 	return &UpdateCredentialResponse{Credential: credentialUpdated}, nil
 }
 
-func (u *UpdateCredential) updateCredentialDetails(credential *entities.Credential, data *UpdateCredentialRequest) *entities.Credential {
+func (u *UpdateCredential) updateCredentialDetails(credential *entity.Credential, data *UpdateCredentialRequest) *entity.Credential {
 	if data.Email != "" {
 		credential.Email = data.Email
 	}
@@ -75,7 +75,7 @@ func (u *UpdateCredential) updateCredentialDetails(credential *entities.Credenti
 	}
 
 	if data.Password != "" {
-		credential.PasswordHash = valueobjects.NewPassword(data.Password)
+		credential.PasswordHash = valueobject.NewPassword(data.Password)
 	}
 
 	credential.UpdatedAt = time.Now().UTC()

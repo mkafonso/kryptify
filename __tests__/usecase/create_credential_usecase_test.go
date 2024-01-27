@@ -2,7 +2,7 @@ package usecase_test
 
 import (
 	"context"
-	factories_test "kryptify/__tests__/factories"
+	factory_test "kryptify/__tests__/factory"
 	memory_repository "kryptify/repository/memory-repository"
 	"testing"
 
@@ -12,10 +12,10 @@ import (
 func TestCreateCredentialUseCase_ShouldCreateNewCredential(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
 	credentialRepo := memory_repository.NewMemoryCredentialsRepository()
-	usecase := factories_test.MakeCreateCredentialUseCase(accountRepo, credentialRepo)
+	usecase := factory_test.MakeCreateCredentialUseCase(accountRepo, credentialRepo)
 
 	// create an account
-	account := factories_test.MakeAccount() // jane@email.com
+	account := factory_test.MakeAccount() // jane@email.com
 	accountRepo.CreateAccount(context.Background(), account)
 
 	request := &usecase.CreateCredentialRequest{
@@ -37,7 +37,7 @@ func TestCreateCredentialUseCase_ShouldCreateNewCredential(t *testing.T) {
 func TestCreateCredentialUseCase_TestAccountNotFound(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
 	credentialRepo := memory_repository.NewMemoryCredentialsRepository()
-	usecase := factories_test.MakeCreateCredentialUseCase(accountRepo, credentialRepo)
+	usecase := factory_test.MakeCreateCredentialUseCase(accountRepo, credentialRepo)
 
 	request := &usecase.CreateCredentialRequest{
 		Email:                "jane.doe@email.com",

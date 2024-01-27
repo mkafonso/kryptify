@@ -1,14 +1,14 @@
-package factories_test
+package factory_test
 
 import (
 	repository "kryptify/repository/memory-repository"
 	"kryptify/usecase"
 )
 
-func MakeFetchCredentialsByOwnerIDUseCase(
+func MakeDeleteCredentialUseCase(
 	accountRepo *repository.MemoryAccountsRepository,
 	credentialRepo *repository.MemoryCredentialsRepository,
-) *usecase.FetchCredentialsByOwnerID {
-	usecase := usecase.NewFetchCredentialsByOwnerID(accountRepo, credentialRepo)
+) *usecase.DeleteCredential {
+	usecase := usecase.NewDeleteCredential(accountRepo, credentialRepo)
 	return usecase
 }

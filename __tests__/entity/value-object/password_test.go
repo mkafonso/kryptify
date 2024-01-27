@@ -1,7 +1,7 @@
-package valueobjects_test
+package valueobject_test
 
 import (
-	valueobjects "kryptify/entities/value-objects"
+	valueobject "kryptify/entity/value-object"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -11,7 +11,7 @@ import (
 func TestPassword_ShouldHashThePassword(t *testing.T) {
 	password := "myVerySecurePassword"
 
-	hashedPassword := valueobjects.NewPassword(password)
+	hashedPassword := valueobject.NewPassword(password)
 
 	assert.NotEmpty(t, hashedPassword)
 
@@ -22,7 +22,7 @@ func TestPassword_ShouldHashThePassword(t *testing.T) {
 
 func TestPassword_TestIsPasswordValidWithValidPassword(t *testing.T) {
 	password := "myVerySecurePassword"
-	hashedPassword := valueobjects.NewPassword(password)
+	hashedPassword := valueobject.NewPassword(password)
 
 	isValid := hashedPassword.IsPasswordValid(password)
 	assert.True(t, isValid)
@@ -30,7 +30,7 @@ func TestPassword_TestIsPasswordValidWithValidPassword(t *testing.T) {
 
 func TestPassword_TestIsPasswordValidWithInValidPassword(t *testing.T) {
 	password := "myVerySecurePassword"
-	hashedPassword := valueobjects.NewPassword(password)
+	hashedPassword := valueobject.NewPassword(password)
 
 	invalidPassword := "wrongPassword"
 	isValid := hashedPassword.IsPasswordValid(invalidPassword)
@@ -39,10 +39,10 @@ func TestPassword_TestIsPasswordValidWithInValidPassword(t *testing.T) {
 
 func TestPassword_SamePasswordsShouldProduceDifferentHashedPasswords(t *testing.T) {
 	password1 := "myVerySecurePassword"
-	hashedPassword1 := valueobjects.NewPassword(password1)
+	hashedPassword1 := valueobject.NewPassword(password1)
 
 	password2 := "myVerySecurePassword"
-	hashedPassword2 := valueobjects.NewPassword(password2)
+	hashedPassword2 := valueobject.NewPassword(password2)
 
 	assert.NotEqual(t, hashedPassword1, hashedPassword2)
 }

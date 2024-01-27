@@ -1,8 +1,8 @@
-package entities
+package entity
 
 import (
-	"kryptify/entities/validations"
-	valueobjects "kryptify/entities/value-objects"
+	"kryptify/entity/validation"
+	valueobject "kryptify/entity/value-object"
 	"time"
 
 	"github.com/google/uuid"
@@ -14,19 +14,19 @@ type Credential struct {
 	Website      string
 	Category     string
 	OwnerID      string
-	PasswordHash valueobjects.Password
-	Health       valueobjects.Health
+	PasswordHash valueobject.Password
+	Health       valueobject.Health
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
 }
 
 func NewCredential(email, password, website, owner_id string) (*Credential, error) {
-	if err := validations.ValidateCreateCredentialInput(email, password, website, owner_id); err != nil {
+	if err := validation.ValidateCreateCredentialInput(email, password, website, owner_id); err != nil {
 		return nil, err
 	}
 
-	hashedPassword := valueobjects.NewPassword(password)
-	passwordHealth := valueobjects.NewPasswordHealth(password)
+	hashedPassword := valueobject.NewPassword(password)
+	passwordHealth := valueobject.NewPasswordHealth(password)
 
 	credential := &Credential{
 		ID:           uuid.New(),

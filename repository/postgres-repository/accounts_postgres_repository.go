@@ -4,14 +4,14 @@ import (
 	"context"
 	"database/sql"
 	db "kryptify/db/sqlc"
-	"kryptify/entities"
-	valueobjects "kryptify/entities/value-objects"
+	"kryptify/entity"
+	valueobject "kryptify/entity/value-object"
 	"kryptify/util"
 
 	"github.com/google/uuid"
 )
 
-func (r *PostgresRepository) CreateAccount(ctx context.Context, account *entities.Account) error {
+func (r *PostgresRepository) CreateAccount(ctx context.Context, account *entity.Account) error {
 	params := db.CreateAccountParams{
 		Name:         account.Name,
 		Email:        account.Email,
@@ -22,7 +22,7 @@ func (r *PostgresRepository) CreateAccount(ctx context.Context, account *entitie
 	return err
 }
 
-func (r *PostgresRepository) UpdateAccount(ctx context.Context, email string, updatedAccount *entities.Account) error {
+func (r *PostgresRepository) UpdateAccount(ctx context.Context, email string, updatedAccount *entity.Account) error {
 	params := db.UpdateAccountParams{
 		Name:         updatedAccount.Name,
 		PasswordHash: string(updatedAccount.PasswordHash),
@@ -35,37 +35,37 @@ func (r *PostgresRepository) UpdateAccount(ctx context.Context, email string, up
 	return err
 }
 
-func (r *PostgresRepository) GetAccountByID(ctx context.Context, accountID string) (*entities.Account, error) {
+func (r *PostgresRepository) GetAccountByID(ctx context.Context, accountID string) (*entity.Account, error) {
 	account, err := r.Queries.GetAccountByID(ctx, uuid.MustParse(accountID))
 	if err != nil {
 		return nil, err
 	}
 
-	return &entities.Account{
+	return &entity.Account{
 		ID:                account.ID,
 		Name:              account.Name,
 		Email:             account.Email,
 		AvatarUrl:         util.GetStringValue(account.AvatarUrl),
 		IsAccountVerified: account.IsAccountVerified.Valid && account.IsAccountVerified.Bool,
-		PasswordHash:      valueobjects.Password(account.PasswordHash),
+		PasswordHash:      valueobject.Password(account.PasswordHash),
 		CreatedAt:         account.CreatedAt,
 		UpdatedAt:         account.UpdatedAt,
 	}, nil
 }
 
-func (r *PostgresRepository) FindAccountByEmail(ctx context.Context, email string) (*entities.Account, error) {
+func (r *PostgresRepository) FindAccountByEmail(ctx context.Context, email string) (*entity.Account, error) {
 	account, err := r.Queries.FindAccountByEmail(ctx, email)
 	if err != nil {
 		return nil, err
 	}
 
-	return &entities.Account{
+	return &entity.Account{
 		ID:                account.ID,
 		Name:              account.Name,
 		Email:             account.Email,
 		AvatarUrl:         util.GetStringValue(account.AvatarUrl),
 		IsAccountVerified: account.IsAccountVerified.Valid && account.IsAccountVerified.Bool,
-		PasswordHash:      valueobjects.Password(account.PasswordHash),
+		PasswordHash:      valueobject.Password(account.PasswordHash),
 		CreatedAt:         account.CreatedAt,
 		UpdatedAt:         account.UpdatedAt,
 	}, nil

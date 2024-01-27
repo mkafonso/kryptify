@@ -2,7 +2,7 @@ package usecase_test
 
 import (
 	"context"
-	factories_test "kryptify/__tests__/factories"
+	factory_test "kryptify/__tests__/factory"
 	memory_repository "kryptify/repository/memory-repository"
 	"testing"
 
@@ -12,10 +12,10 @@ import (
 func TestCreateSessionUseCase_ShouldCreateSession(t *testing.T) {
 	accountsRepo := memory_repository.NewMemoryAccountsRepository()
 	sessionsRepo := memory_repository.NewMemorySessionsRepository()
-	usecase := factories_test.MakeCreateSessionUseCase(accountsRepo, sessionsRepo)
+	usecase := factory_test.MakeCreateSessionUseCase(accountsRepo, sessionsRepo)
 
 	// create an account
-	account := factories_test.MakeAccount() // jane@email.com
+	account := factory_test.MakeAccount() // jane@email.com
 	accountsRepo.CreateAccount(context.Background(), account)
 
 	request := &usecase.CreateSessionRequest{
@@ -40,10 +40,10 @@ func TestCreateSessionUseCase_ShouldCreateSession(t *testing.T) {
 func TestCreateSessionUseCase_TestWrongEmailAddress(t *testing.T) {
 	accountsRepo := memory_repository.NewMemoryAccountsRepository()
 	sessionsRepo := memory_repository.NewMemorySessionsRepository()
-	usecase := factories_test.MakeCreateSessionUseCase(accountsRepo, sessionsRepo)
+	usecase := factory_test.MakeCreateSessionUseCase(accountsRepo, sessionsRepo)
 
 	// create an account
-	account := factories_test.MakeAccount() // jane@email.com
+	account := factory_test.MakeAccount() // jane@email.com
 	accountsRepo.CreateAccount(context.Background(), account)
 
 	request := &usecase.CreateSessionRequest{
@@ -62,10 +62,10 @@ func TestCreateSessionUseCase_TestWrongEmailAddress(t *testing.T) {
 func TestCreateSessionUseCase_TestWrongPassword(t *testing.T) {
 	accountsRepo := memory_repository.NewMemoryAccountsRepository()
 	sessionsRepo := memory_repository.NewMemorySessionsRepository()
-	usecase := factories_test.MakeCreateSessionUseCase(accountsRepo, sessionsRepo)
+	usecase := factory_test.MakeCreateSessionUseCase(accountsRepo, sessionsRepo)
 
 	// create an account
-	account := factories_test.MakeAccount() // jane@email.com
+	account := factory_test.MakeAccount() // jane@email.com
 	accountsRepo.CreateAccount(context.Background(), account)
 
 	request := &usecase.CreateSessionRequest{

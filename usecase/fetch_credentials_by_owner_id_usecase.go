@@ -3,9 +3,9 @@ package usecase
 import (
 	"context"
 	"errors"
-	"kryptify/entities"
+	"kryptify/entity"
 	"kryptify/repository"
-	appError "kryptify/usecase/errors"
+	appError "kryptify/usecase/error"
 )
 
 type FetchCredentialsByOwnerIDRequest struct {
@@ -13,7 +13,7 @@ type FetchCredentialsByOwnerIDRequest struct {
 }
 
 type FetchCredentialsByOwnerIDResponse struct {
-	Credentials []*entities.Credential
+	Credentials []*entity.Credential
 }
 
 type FetchCredentialsByOwnerID struct {

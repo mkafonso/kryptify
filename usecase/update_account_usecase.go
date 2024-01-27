@@ -3,10 +3,10 @@ package usecase
 import (
 	"context"
 	"errors"
-	"kryptify/entities"
-	valueobjects "kryptify/entities/value-objects"
+	"kryptify/entity"
+	valueobject "kryptify/entity/value-object"
 	"kryptify/repository"
-	appError "kryptify/usecase/errors"
+	appError "kryptify/usecase/error"
 	"time"
 )
 
@@ -16,7 +16,7 @@ type UpdateAccountRequest struct {
 }
 
 type UpdateAccountResponse struct {
-	Account *entities.Account
+	Account *entity.Account
 }
 
 type UpdateAccount struct {
@@ -48,7 +48,7 @@ func (c *UpdateAccount) Execute(ctx context.Context, data *UpdateAccountRequest)
 	return &UpdateAccountResponse{Account: accountUpdated}, nil
 }
 
-func (c *UpdateAccount) updateAccountDetails(account *entities.Account, data *UpdateAccountRequest) *entities.Account {
+func (c *UpdateAccount) updateAccountDetails(account *entity.Account, data *UpdateAccountRequest) *entity.Account {
 	if data.Name != "" {
 		account.Name = data.Name
 	}
@@ -58,7 +58,7 @@ func (c *UpdateAccount) updateAccountDetails(account *entities.Account, data *Up
 	}
 
 	if data.Password != "" {
-		account.PasswordHash = valueobjects.NewPassword(data.Password)
+		account.PasswordHash = valueobject.NewPassword(data.Password)
 	}
 
 	account.UpdatedAt = time.Now().UTC()

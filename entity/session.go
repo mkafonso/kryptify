@@ -1,7 +1,7 @@
-package entities
+package entity
 
 import (
-	validations "kryptify/entities/validations"
+	"kryptify/entity/validation"
 	"time"
 
 	"github.com/google/uuid"
@@ -19,7 +19,7 @@ type Session struct {
 }
 
 func NewSession(accountID, refreshToken, userAgent, clientIP string, isBlocked bool, expiresAt time.Time) (*Session, error) {
-	if err := validations.ValidateCreateSessionInput(
+	if err := validation.ValidateCreateSessionInput(
 		accountID, refreshToken, userAgent, clientIP, isBlocked, expiresAt,
 	); err != nil {
 		return nil, err

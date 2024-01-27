@@ -1,7 +1,6 @@
-package entities_test
+package entity_test
 
 import (
-	"kryptify/entities"
 	"testing"
 	"time"
 
@@ -16,7 +15,7 @@ func TestSessionEntity_TestCreateNewSession(t *testing.T) {
 	isBlocked := false
 	expiresAt := time.Now().Add(time.Hour)
 
-	session, err := entities.NewSession(accountID, refreshToken, userAgent, clientIP, isBlocked, expiresAt)
+	session, err := entity.NewSession(accountID, refreshToken, userAgent, clientIP, isBlocked, expiresAt)
 	assert.NoError(t, err)
 	assert.NotNil(t, session)
 }
@@ -29,7 +28,7 @@ func TestSessionEntity_TestBlockedAccount(t *testing.T) {
 	isBlocked := true
 	expiresAt := time.Now().Add(time.Hour)
 
-	_, err := entities.NewSession(accountID, refreshToken, userAgent, clientIP, isBlocked, expiresAt)
+	_, err := entity.NewSession(accountID, refreshToken, userAgent, clientIP, isBlocked, expiresAt)
 	assert.Error(t, err)
 	assert.Equal(t, err.Error(), "cannot create a session with a blocked account")
 }
@@ -42,7 +41,7 @@ func TestSessionEntity_TestInvalidExpiresAtDate(t *testing.T) {
 	isBlocked := false
 	expiresAt := time.Now().Add(-time.Hour)
 
-	_, err := entities.NewSession(accountID, refreshToken, userAgent, clientIP, isBlocked, expiresAt)
+	_, err := entity.NewSession(accountID, refreshToken, userAgent, clientIP, isBlocked, expiresAt)
 	assert.Error(t, err)
 	assert.Equal(t, err.Error(), "invalid time value")
 }
@@ -55,7 +54,7 @@ func TestSessionEntity_TestEmptyAccountID(t *testing.T) {
 	isBlocked := false
 	expiresAt := time.Now().Add(time.Hour)
 
-	_, err := entities.NewSession(accountID, refreshToken, userAgent, clientIP, isBlocked, expiresAt)
+	_, err := entity.NewSession(accountID, refreshToken, userAgent, clientIP, isBlocked, expiresAt)
 	assert.Error(t, err)
 	assert.Equal(t, err.Error(), "missing required fields in the JSON object")
 }
@@ -68,7 +67,7 @@ func TestSessionEntity_TestEmptyRefreshToken(t *testing.T) {
 	isBlocked := false
 	expiresAt := time.Now().Add(time.Hour)
 
-	_, err := entities.NewSession(accountID, refreshToken, userAgent, clientIP, isBlocked, expiresAt)
+	_, err := entity.NewSession(accountID, refreshToken, userAgent, clientIP, isBlocked, expiresAt)
 	assert.Error(t, err)
 	assert.Equal(t, err.Error(), "missing required fields in the JSON object")
 }
@@ -81,7 +80,7 @@ func TestSessionEntity_TestEmptyUserAgent(t *testing.T) {
 	isBlocked := false
 	expiresAt := time.Now().Add(time.Hour)
 
-	_, err := entities.NewSession(accountID, refreshToken, userAgent, clientIP, isBlocked, expiresAt)
+	_, err := entity.NewSession(accountID, refreshToken, userAgent, clientIP, isBlocked, expiresAt)
 	assert.Error(t, err)
 	assert.Equal(t, err.Error(), "missing required fields in the JSON object")
 }
@@ -94,7 +93,7 @@ func TestSessionEntity_TestEmptyClientIP(t *testing.T) {
 	isBlocked := false
 	expiresAt := time.Now().Add(time.Hour)
 
-	_, err := entities.NewSession(accountID, refreshToken, userAgent, clientIP, isBlocked, expiresAt)
+	_, err := entity.NewSession(accountID, refreshToken, userAgent, clientIP, isBlocked, expiresAt)
 	assert.Error(t, err)
 	assert.Equal(t, err.Error(), "missing required fields in the JSON object")
 }

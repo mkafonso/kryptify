@@ -2,23 +2,23 @@ package memory_repository
 
 import (
 	"context"
-	"kryptify/entities"
-	appError "kryptify/usecase/errors"
+	"kryptify/entity"
+	appError "kryptify/usecase/error"
 	"sync"
 )
 
 type MemoryCredentialsRepository struct {
 	sync.Mutex
-	Credentials map[string]*entities.Credential // Map to store credentials, using CredentialID as the key
+	Credentials map[string]*entity.Credential // Map to store credentials, using CredentialID as the key
 }
 
 func NewMemoryCredentialsRepository() *MemoryCredentialsRepository {
 	return &MemoryCredentialsRepository{
-		Credentials: make(map[string]*entities.Credential),
+		Credentials: make(map[string]*entity.Credential),
 	}
 }
 
-func (repo *MemoryCredentialsRepository) CreateCredential(ctx context.Context, credential *entities.Credential) error {
+func (repo *MemoryCredentialsRepository) CreateCredential(ctx context.Context, credential *entity.Credential) error {
 	repo.Lock()
 	defer repo.Unlock()
 
@@ -39,7 +39,7 @@ func (repo *MemoryCredentialsRepository) DeleteCredential(ctx context.Context, c
 	return nil
 }
 
-func (repo *MemoryCredentialsRepository) UpdateCredential(ctx context.Context, credentialID string, updatedCredential *entities.Credential) error {
+func (repo *MemoryCredentialsRepository) UpdateCredential(ctx context.Context, credentialID string, updatedCredential *entity.Credential) error {
 	repo.Lock()
 	defer repo.Unlock()
 
@@ -65,7 +65,7 @@ func (repo *MemoryCredentialsRepository) UpdateCredential(ctx context.Context, c
 	return nil
 }
 
-func (repo *MemoryCredentialsRepository) GetCredentialByID(ctx context.Context, credentialID string) (*entities.Credential, error) {
+func (repo *MemoryCredentialsRepository) GetCredentialByID(ctx context.Context, credentialID string) (*entity.Credential, error) {
 	repo.Lock()
 	defer repo.Unlock()
 
@@ -78,11 +78,11 @@ func (repo *MemoryCredentialsRepository) GetCredentialByID(ctx context.Context, 
 	return credential, nil
 }
 
-func (repo *MemoryCredentialsRepository) GetCredentialsByOwnerID(ctx context.Context, ownerID string) ([]*entities.Credential, error) {
+func (repo *MemoryCredentialsRepository) GetCredentialsByOwnerID(ctx context.Context, ownerID string) ([]*entity.Credential, error) {
 	repo.Lock()
 	defer repo.Unlock()
 
-	var credentials []*entities.Credential
+	var credentials []*entity.Credential
 
 	for _, credential := range repo.Credentials {
 		if credential.OwnerID == ownerID {

@@ -2,9 +2,9 @@ package repository
 
 import (
 	"context"
-	"kryptify/entities"
+	"kryptify/entity"
 )
 
 type SessionsRepositoryInterface interface {
-	CreateSession(ctx context.Context, session *entities.Session) (*entities.Session, error)
+	CreateSession(ctx context.Context, session *entity.Session) (*entity.Session, error)
 }

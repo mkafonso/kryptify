@@ -2,9 +2,9 @@ package usecase
 
 import (
 	"context"
-	"kryptify/entities"
+	"kryptify/entity"
 	"kryptify/repository"
-	appError "kryptify/usecase/errors"
+	appError "kryptify/usecase/error"
 )
 
 type GetAccountProfileRequest struct {
@@ -12,7 +12,7 @@ type GetAccountProfileRequest struct {
 }
 
 type GetAccountProfileResponse struct {
-	Account *entities.Account
+	Account *entity.Account
 }
 
 type GetAccountProfile struct {

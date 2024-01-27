@@ -2,9 +2,9 @@ package usecase
 
 import (
 	"context"
-	"kryptify/entities"
+	"kryptify/entity"
 	"kryptify/repository"
-	appError "kryptify/usecase/errors"
+	appError "kryptify/usecase/error"
 )
 
 type CreateCredentialRequest struct {
@@ -13,7 +13,7 @@ type CreateCredentialRequest struct {
 }
 
 type CreateCredentialResponse struct {
-	Credential *entities.Credential
+	Credential *entity.Credential
 }
 
 type CreateCredential struct {
@@ -39,7 +39,7 @@ func (c *CreateCredential) Execute(ctx context.Context, data *CreateCredentialRe
 	}
 
 	// create the new credential
-	credential, err := entities.NewCredential(data.Email, data.Password, data.Website, data.RequestedByAccountID)
+	credential, err := entity.NewCredential(data.Email, data.Password, data.Website, data.RequestedByAccountID)
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +51,7 @@ func (c *CreateCredential) Execute(ctx context.Context, data *CreateCredentialRe
 	}
 
 	response := &CreateCredentialResponse{
-		Credential: &entities.Credential{
+		Credential: &entity.Credential{
 			ID:        credential.ID,
 			Email:     credential.Email,
 			Website:   credential.Website,

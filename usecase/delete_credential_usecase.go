@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"kryptify/repository"
-	appError "kryptify/usecase/errors"
+	appError "kryptify/usecase/error"
 )
 
 type DeleteCredentialRequest struct {

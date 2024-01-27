@@ -1,8 +1,8 @@
-package entities
+package entity
 
 import (
-	"kryptify/entities/validations"
-	valueobjects "kryptify/entities/value-objects"
+	"kryptify/entity/validation"
+	valueobject "kryptify/entity/value-object"
 	"time"
 
 	"github.com/google/uuid"
@@ -14,17 +14,17 @@ type Account struct {
 	Email             string
 	AvatarUrl         string
 	IsAccountVerified bool
-	PasswordHash      valueobjects.Password
+	PasswordHash      valueobject.Password
 	CreatedAt         time.Time
 	UpdatedAt         time.Time
 }
 
 func NewAccount(name, email, password string) (*Account, error) {
-	if err := validations.ValidateCreateAccountInput(name, email, password); err != nil {
+	if err := validation.ValidateCreateAccountInput(name, email, password); err != nil {
 		return nil, err
 	}
 
-	hashedPassword := valueobjects.NewPassword(password)
+	hashedPassword := valueobject.NewPassword(password)
 
 	account := &Account{
 		ID:                uuid.New(),

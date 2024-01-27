@@ -2,23 +2,23 @@ package memory_repository
 
 import (
 	"context"
-	"kryptify/entities"
-	appError "kryptify/usecase/errors"
+	"kryptify/entity"
+	appError "kryptify/usecase/error"
 	"sync"
 )
 
 type MemoryAccountsRepository struct {
 	sync.Mutex
-	Accounts map[string]*entities.Account // Map to store accounts, using email as the key
+	Accounts map[string]*entity.Account // Map to store accounts, using email as the key
 }
 
 func NewMemoryAccountsRepository() *MemoryAccountsRepository {
 	return &MemoryAccountsRepository{
-		Accounts: make(map[string]*entities.Account),
+		Accounts: make(map[string]*entity.Account),
 	}
 }
 
-func (repo *MemoryAccountsRepository) CreateAccount(ctx context.Context, account *entities.Account) error {
+func (repo *MemoryAccountsRepository) CreateAccount(ctx context.Context, account *entity.Account) error {
 	repo.Lock()
 	defer repo.Unlock()
 
@@ -31,7 +31,7 @@ func (repo *MemoryAccountsRepository) CreateAccount(ctx context.Context, account
 	return nil
 }
 
-func (repo *MemoryAccountsRepository) UpdateAccount(ctx context.Context, email string, updatedAccount *entities.Account) error {
+func (repo *MemoryAccountsRepository) UpdateAccount(ctx context.Context, email string, updatedAccount *entity.Account) error {
 	repo.Lock()
 	defer repo.Unlock()
 
@@ -57,7 +57,7 @@ func (repo *MemoryAccountsRepository) UpdateAccount(ctx context.Context, email s
 	return nil
 }
 
-func (repo *MemoryAccountsRepository) GetAccountByID(ctx context.Context, accountID string) (*entities.Account, error) {
+func (repo *MemoryAccountsRepository) GetAccountByID(ctx context.Context, accountID string) (*entity.Account, error) {
 	repo.Lock()
 	defer repo.Unlock()
 
@@ -70,7 +70,7 @@ func (repo *MemoryAccountsRepository) GetAccountByID(ctx context.Context, accoun
 	return nil, appError.NewErrorAccountNotFound(accountID)
 }
 
-func (repo *MemoryAccountsRepository) FindAccountByEmail(ctx context.Context, email string) (*entities.Account, error) {
+func (repo *MemoryAccountsRepository) FindAccountByEmail(ctx context.Context, email string) (*entity.Account, error) {
 	repo.Lock()
 	defer repo.Unlock()
 

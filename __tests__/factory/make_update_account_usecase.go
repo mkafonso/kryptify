@@ -1,4 +1,4 @@
-package factories_test
+package factory_test
 
 import (
 	repository "kryptify/repository/memory-repository"

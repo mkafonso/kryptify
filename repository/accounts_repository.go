@@ -2,12 +2,12 @@ package repository
 
 import (
 	"context"
-	"kryptify/entities"
+	"kryptify/entity"
 )
 
 type AccountsRepositoryInterface interface {
-	CreateAccount(ctx context.Context, account *entities.Account) error
-	UpdateAccount(ctx context.Context, email string, updatedAccount *entities.Account) error
-	GetAccountByID(ctx context.Context, accountID string) (*entities.Account, error)
-	FindAccountByEmail(ctx context.Context, email string) (*entities.Account, error)
+	CreateAccount(ctx context.Context, account *entity.Account) error
+	UpdateAccount(ctx context.Context, email string, updatedAccount *entity.Account) error
+	GetAccountByID(ctx context.Context, accountID string) (*entity.Account, error)
+	FindAccountByEmail(ctx context.Context, email string) (*entity.Account, error)
 }

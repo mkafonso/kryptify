@@ -4,14 +4,14 @@ import (
 	"context"
 	"database/sql"
 	db "kryptify/db/sqlc"
-	"kryptify/entities"
-	valueobjects "kryptify/entities/value-objects"
+	"kryptify/entity"
+	valueobject "kryptify/entity/value-object"
 	"kryptify/util"
 
 	"github.com/google/uuid"
 )
 
-func (r *PostgresRepository) CreateCredential(ctx context.Context, credential *entities.Credential) error {
+func (r *PostgresRepository) CreateCredential(ctx context.Context, credential *entity.Credential) error {
 	params := db.CreateCredentialParams{
 		Email:        credential.Email,
 		Website:      credential.Website,
@@ -28,7 +28,7 @@ func (r *PostgresRepository) DeleteCredential(ctx context.Context, credentialID 
 	return err
 }
 
-func (r *PostgresRepository) UpdateCredential(ctx context.Context, credentialID string, updatedCredential *entities.Credential) error {
+func (r *PostgresRepository) UpdateCredential(ctx context.Context, credentialID string, updatedCredential *entity.Credential) error {
 	params := db.UpdateCredentialParams{
 		ID:           updatedCredential.ID,
 		Email:        updatedCredential.Email,
@@ -42,20 +42,20 @@ func (r *PostgresRepository) UpdateCredential(ctx context.Context, credentialID 
 	return err
 }
 
-func (r *PostgresRepository) GetCredentialByID(ctx context.Context, credentialID string) (*entities.Credential, error) {
+func (r *PostgresRepository) GetCredentialByID(ctx context.Context, credentialID string) (*entity.Credential, error) {
 	credential, err := r.Queries.GetCredentialByID(ctx, uuid.MustParse(credentialID))
 	if err != nil {
 		return nil, err
 	}
 
-	entityCredential := &entities.Credential{
+	entityCredential := &entity.Credential{
 		ID:           credential.ID,
 		Email:        credential.Email,
 		Website:      credential.Website,
 		Category:     util.GetStringValue(credential.Category),
 		OwnerID:      credential.OwnerID.String(),
-		PasswordHash: valueobjects.Password(credential.PasswordHash),
-		Health:       valueobjects.Health(credential.Health),
+		PasswordHash: valueobject.Password(credential.PasswordHash),
+		Health:       valueobject.Health(credential.Health),
 		CreatedAt:    credential.CreatedAt,
 		UpdatedAt:    credential.UpdatedAt,
 	}
@@ -63,22 +63,22 @@ func (r *PostgresRepository) GetCredentialByID(ctx context.Context, credentialID
 	return entityCredential, nil
 }
 
-func (r *PostgresRepository) GetCredentialsByOwnerID(ctx context.Context, ownerID string) ([]*entities.Credential, error) {
+func (r *PostgresRepository) GetCredentialsByOwnerID(ctx context.Context, ownerID string) ([]*entity.Credential, error) {
 	credentials, err := r.Queries.GetCredentialsByOwnerID(ctx, uuid.MustParse(ownerID))
 	if err != nil {
 		return nil, err
 	}
 
-	var entityCredentials []*entities.Credential
+	var entityCredentials []*entity.Credential
 	for _, credential := range credentials {
-		entityCredential := &entities.Credential{
+		entityCredential := &entity.Credential{
 			ID:           credential.ID,
 			Email:        credential.Email,
 			Website:      credential.Website,
 			Category:     util.GetStringValue(credential.Category),
 			OwnerID:      credential.OwnerID.String(),
-			PasswordHash: valueobjects.Password(credential.PasswordHash),
-			Health:       valueobjects.Health(credential.Health),
+			PasswordHash: valueobject.Password(credential.PasswordHash),
+			Health:       valueobject.Health(credential.Health),
 			CreatedAt:    credential.CreatedAt,
 			UpdatedAt:    credential.UpdatedAt,
 		}

@@ -2,7 +2,7 @@ package usecase_test
 
 import (
 	"context"
-	factories_test "kryptify/__tests__/factories"
+	factory_test "kryptify/__tests__/factory"
 	memory_repository "kryptify/repository/memory-repository"
 	"testing"
 
@@ -12,14 +12,14 @@ import (
 func TestGetCredentialByIDUseCase_ShouldGetCredentialByID(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
 	credentialRepo := memory_repository.NewMemoryCredentialsRepository()
-	usecase := factories_test.MakeGetCredentialByIDUseCase(accountRepo, credentialRepo)
+	usecase := factory_test.MakeGetCredentialByIDUseCase(accountRepo, credentialRepo)
 
 	// create an account
-	account := factories_test.MakeAccount()
+	account := factory_test.MakeAccount()
 	accountRepo.CreateAccount(context.Background(), account)
 
 	// create a credential
-	credential := factories_test.MakeCredential("", "", "", account.ID.String()) //make sure it's created by the same account ID
+	credential := factory_test.MakeCredential("", "", "", account.ID.String()) //make sure it's created by the same account ID
 	credentialRepo.CreateCredential(context.Background(), credential)
 
 	request := &usecase.GetCredentialByIDRequest{
@@ -38,14 +38,14 @@ func TestGetCredentialByIDUseCase_ShouldGetCredentialByID(t *testing.T) {
 func TestGetCredentialByIDUseCase_TestAccountNotFound(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
 	credentialRepo := memory_repository.NewMemoryCredentialsRepository()
-	usecase := factories_test.MakeGetCredentialByIDUseCase(accountRepo, credentialRepo)
+	usecase := factory_test.MakeGetCredentialByIDUseCase(accountRepo, credentialRepo)
 
 	// create an account
-	account := factories_test.MakeAccount()
+	account := factory_test.MakeAccount()
 	accountRepo.CreateAccount(context.Background(), account)
 
 	// create a credential
-	credential := factories_test.MakeCredential() // will be created by random accountID
+	credential := factory_test.MakeCredential() // will be created by random accountID
 	credentialRepo.CreateCredential(context.Background(), credential)
 
 	request := &usecase.GetCredentialByIDRequest{
@@ -63,14 +63,14 @@ func TestGetCredentialByIDUseCase_TestAccountNotFound(t *testing.T) {
 func TestGetCredentialByIDUseCase_TestMissingPermission(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
 	credentialRepo := memory_repository.NewMemoryCredentialsRepository()
-	usecase := factories_test.MakeGetCredentialByIDUseCase(accountRepo, credentialRepo)
+	usecase := factory_test.MakeGetCredentialByIDUseCase(accountRepo, credentialRepo)
 
 	// create an account
-	account := factories_test.MakeAccount()
+	account := factory_test.MakeAccount()
 	accountRepo.CreateAccount(context.Background(), account)
 
 	// create a credential
-	credential := factories_test.MakeCredential() // will be created by random accountID
+	credential := factory_test.MakeCredential() // will be created by random accountID
 	credentialRepo.CreateCredential(context.Background(), credential)
 
 	request := &usecase.GetCredentialByIDRequest{

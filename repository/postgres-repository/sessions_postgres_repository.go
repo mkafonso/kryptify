@@ -4,10 +4,10 @@ import (
 	"context"
 	"database/sql"
 	db "kryptify/db/sqlc"
-	"kryptify/entities"
+	"kryptify/entity"
 )
 
-func (r *PostgresRepository) CreateSession(ctx context.Context, session *entities.Session) (*entities.Session, error) {
+func (r *PostgresRepository) CreateSession(ctx context.Context, session *entity.Session) (*entity.Session, error) {
 	params := db.CreateSessionParams{
 		AccountID:    session.AccountID,
 		RefreshToken: session.RefreshToken,

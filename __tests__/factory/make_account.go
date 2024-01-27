@@ -1,8 +1,8 @@
-package factories_test
+package factory_test
 
-import "kryptify/entities"
+import "kryptify/entity"
 
-func MakeAccount(args ...string) *entities.Account {
+func MakeAccount(args ...string) *entity.Account {
 	var name, email, password string
 	var accountNotVerified bool
 
@@ -37,7 +37,7 @@ func MakeAccount(args ...string) *entities.Account {
 		password = "myVerySecurePassword"
 	}
 
-	account, err := entities.NewAccount(name, email, password)
+	account, err := entity.NewAccount(name, email, password)
 	account.IsAccountVerified = accountNotVerified
 	if err != nil {
 		return nil

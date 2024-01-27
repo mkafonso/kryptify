@@ -2,7 +2,7 @@ package usecase_test
 
 import (
 	"context"
-	factories_test "kryptify/__tests__/factories"
+	factory_test "kryptify/__tests__/factory"
 	memory_repository "kryptify/repository/memory-repository"
 	"testing"
 
@@ -11,7 +11,7 @@ import (
 
 func TestCreateAccountUseCase_ShouldCreateNewAccount(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
-	usecase := factories_test.MakeCreateAccountUseCase(accountRepo)
+	usecase := factory_test.MakeCreateAccountUseCase(accountRepo)
 
 	request := &usecase.CreateAccountRequest{
 		Name:     "Jane Doe",
@@ -30,7 +30,7 @@ func TestCreateAccountUseCase_ShouldCreateNewAccount(t *testing.T) {
 
 func TestCreateAccountUseCase_TestEmailTaken(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
-	usecase := factories_test.MakeCreateAccountUseCase(accountRepo)
+	usecase := factory_test.MakeCreateAccountUseCase(accountRepo)
 
 	request := &usecase.CreateAccountRequest{
 		Name:     "Jane Doe",

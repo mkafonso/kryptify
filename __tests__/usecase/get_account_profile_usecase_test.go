@@ -2,7 +2,7 @@ package usecase_test
 
 import (
 	"context"
-	factories_test "kryptify/__tests__/factories"
+	factory_test "kryptify/__tests__/factory"
 	memory_repository "kryptify/repository/memory-repository"
 	"testing"
 
@@ -11,10 +11,10 @@ import (
 
 func TestGetAccountProfileUseCase_ShouldGetTheProfile(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
-	usecase := factories_test.MakeGetAccountProfileUseCase(accountRepo)
+	usecase := factory_test.MakeGetAccountProfileUseCase(accountRepo)
 
 	// create an account
-	account := factories_test.MakeAccount() // jane@email.com
+	account := factory_test.MakeAccount() // jane@email.com
 	accountRepo.CreateAccount(context.Background(), account)
 
 	request := &usecase.GetAccountProfileRequest{
@@ -31,10 +31,10 @@ func TestGetAccountProfileUseCase_ShouldGetTheProfile(t *testing.T) {
 
 func TestGetAccountProfileUseCase_TestAccountNotFound(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
-	usecase := factories_test.MakeGetAccountProfileUseCase(accountRepo)
+	usecase := factory_test.MakeGetAccountProfileUseCase(accountRepo)
 
 	// create an account
-	account := factories_test.MakeAccount() // jane@email.com
+	account := factory_test.MakeAccount() // jane@email.com
 	accountRepo.CreateAccount(context.Background(), account)
 
 	request := &usecase.GetAccountProfileRequest{
@@ -51,10 +51,10 @@ func TestGetAccountProfileUseCase_TestAccountNotFound(t *testing.T) {
 
 func TestGetAccountProfileUseCase_TestMissingPermission(t *testing.T) {
 	accountRepo := memory_repository.NewMemoryAccountsRepository()
-	usecase := factories_test.MakeGetAccountProfileUseCase(accountRepo)
+	usecase := factory_test.MakeGetAccountProfileUseCase(accountRepo)
 
 	// create an account
-	account := factories_test.MakeAccount() // jane@email.com
+	account := factory_test.MakeAccount() // jane@email.com
 	accountRepo.CreateAccount(context.Background(), account)
 
 	request := &usecase.GetAccountProfileRequest{

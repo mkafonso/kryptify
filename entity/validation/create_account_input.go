@@ -1,7 +1,7 @@
-package validations
+package validation
 
 import (
-	appError "kryptify/usecase/errors"
+	appError "kryptify/usecase/error"
 )
 
 func ValidateCreateAccountInput(name, email, password string) error {

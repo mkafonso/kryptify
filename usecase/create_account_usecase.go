@@ -3,9 +3,9 @@ package usecase
 import (
 	"context"
 
-	"kryptify/entities"
+	"kryptify/entity"
 	"kryptify/repository"
-	appError "kryptify/usecase/errors"
+	appError "kryptify/usecase/error"
 )
 
 type CreateAccountRequest struct {
@@ -13,7 +13,7 @@ type CreateAccountRequest struct {
 }
 
 type CreateAccountResponse struct {
-	Account *entities.Account
+	Account *entity.Account
 }
 
 type CreateAccount struct {
@@ -31,7 +31,7 @@ func (c *CreateAccount) Execute(ctx context.Context, data *CreateAccountRequest)
 		return nil, appError.NewErrorEmailAlreadyTaken()
 	}
 
-	account, err := entities.NewAccount(data.Name, data.Email, data.Password)
+	account, err := entity.NewAccount(data.Name, data.Email, data.Password)
 	if err != nil {
 		return nil, err
 	}
