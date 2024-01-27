@@ -3,7 +3,7 @@ package store
 import (
 	"context"
 	"database/sql"
-	db "kryptify/database/sqlc"
+	db "kryptify/db/sqlc"
 	"kryptify/entities"
 )
 

@@ -2,7 +2,7 @@ package store
 
 import (
 	"database/sql"
-	db "kryptify/database/sqlc"
+	db "kryptify/db/sqlc"
 )
 
 type PostgresRepository struct {
