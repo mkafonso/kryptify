@@ -11,9 +11,10 @@
   "dependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "tailwind-scrollbar": "^3.0.5"
+    "tailwind-scrollbar": "3.0.5"
   },
   "devDependencies": {
+    "@crxjs/vite-plugin": "2.0.0-beta.23",
     "@types/react": "18.2.43",
     "@types/react-dom": "18.2.17",
     "@vitejs/plugin-react": "4.2.1",
