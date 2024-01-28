@@ -14,7 +14,7 @@
 
 html,
 body {
-  @apply bg-main-950 text-main-100;
+  @apply bg-main-100 text-main-800;
 }
 
 body {
