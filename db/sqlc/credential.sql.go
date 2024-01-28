@@ -90,7 +90,7 @@ func (q *Queries) GetCredentialsByOwnerID(ctx context.Context, ownerID uuid.UUID
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Credential
+	items := []Credential{}
 	for rows.Next() {
 		var i Credential
 		if err := rows.Scan(
