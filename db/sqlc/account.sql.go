@@ -7,10 +7,10 @@ package db
 
 import (
 	"context"
-	"database/sql"
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const createAccount = `-- name: CreateAccount :exec
@@ -29,7 +29,7 @@ type CreateAccountParams struct {
 // Parameters: name, email, password_hash
 // Returns: Newly created account
 func (q *Queries) CreateAccount(ctx context.Context, arg CreateAccountParams) error {
-	_, err := q.db.ExecContext(ctx, createAccount, arg.Name, arg.Email, arg.PasswordHash)
+	_, err := q.db.Exec(ctx, createAccount, arg.Name, arg.Email, arg.PasswordHash)
 	return err
 }
 
@@ -43,7 +43,7 @@ LIMIT 1
 // Parameters: email
 // Returns: Single account matching the email
 func (q *Queries) FindAccountByEmail(ctx context.Context, email string) (Account, error) {
-	row := q.db.QueryRowContext(ctx, findAccountByEmail, email)
+	row := q.db.QueryRow(ctx, findAccountByEmail, email)
 	var i Account
 	err := row.Scan(
 		&i.ID,
@@ -68,7 +68,7 @@ LIMIT 1
 // Parameters: id
 // Returns: Single account matching the ID
 func (q *Queries) GetAccountByID(ctx context.Context, id uuid.UUID) (Account, error) {
-	row := q.db.QueryRowContext(ctx, getAccountByID, id)
+	row := q.db.QueryRow(ctx, getAccountByID, id)
 	var i Account
 	err := row.Scan(
 		&i.ID,
@@ -95,18 +95,18 @@ RETURNING id, name, email, avatar_url, is_account_verified, password_hash, creat
 `
 
 type UpdateAccountParams struct {
-	Name         string         `json:"name"`
-	AvatarUrl    sql.NullString `json:"avatar_url"`
-	PasswordHash string         `json:"password_hash"`
-	UpdatedAt    time.Time      `json:"updated_at"`
-	Email        string         `json:"email"`
+	Name         string      `json:"name"`
+	AvatarUrl    pgtype.Text `json:"avatar_url"`
+	PasswordHash string      `json:"password_hash"`
+	UpdatedAt    time.Time   `json:"updated_at"`
+	Email        string      `json:"email"`
 }
 
 // Update an account by email
 // Parameters: name, avatar_url, password_hash, updated_at, email
 // Returns: Updated account
 func (q *Queries) UpdateAccount(ctx context.Context, arg UpdateAccountParams) error {
-	_, err := q.db.ExecContext(ctx, updateAccount,
+	_, err := q.db.Exec(ctx, updateAccount,
 		arg.Name,
 		arg.AvatarUrl,
 		arg.PasswordHash,

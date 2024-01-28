@@ -7,8 +7,9 @@ package db
 
 import (
 	"context"
-	"database/sql"
 	"time"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const createSession = `-- name: CreateSession :exec
@@ -18,19 +19,19 @@ RETURNING id, account_id, refresh_token, user_agent, client_ip, is_blocked, expi
 `
 
 type CreateSessionParams struct {
-	AccountID    string         `json:"account_id"`
-	RefreshToken string         `json:"refresh_token"`
-	UserAgent    sql.NullString `json:"user_agent"`
-	ClientIp     sql.NullString `json:"client_ip"`
-	IsBlocked    sql.NullBool   `json:"is_blocked"`
-	ExpiresAt    time.Time      `json:"expires_at"`
+	AccountID    string      `json:"account_id"`
+	RefreshToken string      `json:"refresh_token"`
+	UserAgent    pgtype.Text `json:"user_agent"`
+	ClientIp     pgtype.Text `json:"client_ip"`
+	IsBlocked    pgtype.Bool `json:"is_blocked"`
+	ExpiresAt    time.Time   `json:"expires_at"`
 }
 
 // Create a new session
 // Parameters: account_id, refresh_token, user_agent, client_ip, is_blocked, expires_at
 // Returns: Newly created session
 func (q *Queries) CreateSession(ctx context.Context, arg CreateSessionParams) error {
-	_, err := q.db.ExecContext(ctx, createSession,
+	_, err := q.db.Exec(ctx, createSession,
 		arg.AccountID,
 		arg.RefreshToken,
 		arg.UserAgent,

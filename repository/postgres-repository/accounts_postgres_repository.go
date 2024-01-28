@@ -2,13 +2,13 @@ package store
 
 import (
 	"context"
-	"database/sql"
 	db "kryptify/db/sqlc"
 	"kryptify/entity"
 	valueobject "kryptify/entity/value-object"
 	"kryptify/util"
 
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 func (r *PostgresRepository) CreateAccount(ctx context.Context, account *entity.Account) error {
@@ -26,7 +26,7 @@ func (r *PostgresRepository) UpdateAccount(ctx context.Context, email string, up
 	params := db.UpdateAccountParams{
 		Name:         updatedAccount.Name,
 		PasswordHash: string(updatedAccount.PasswordHash),
-		AvatarUrl:    sql.NullString{String: updatedAccount.AvatarUrl},
+		AvatarUrl:    pgtype.Text{String: updatedAccount.AvatarUrl},
 		UpdatedAt:    updatedAccount.UpdatedAt,
 		Email:        email,
 	}

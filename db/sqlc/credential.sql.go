@@ -7,10 +7,10 @@ package db
 
 import (
 	"context"
-	"database/sql"
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const createCredential = `-- name: CreateCredential :exec
@@ -30,7 +30,7 @@ type CreateCredentialParams struct {
 // Parameters: email, password_hash, website, owner_id
 // Returns: Newly created credential
 func (q *Queries) CreateCredential(ctx context.Context, arg CreateCredentialParams) error {
-	_, err := q.db.ExecContext(ctx, createCredential,
+	_, err := q.db.Exec(ctx, createCredential,
 		arg.Email,
 		arg.PasswordHash,
 		arg.Website,
@@ -46,7 +46,7 @@ DELETE FROM credentials WHERE id = $1
 // Delete a credential by ID
 // Parameters: credentialID
 func (q *Queries) DeleteCredential(ctx context.Context, id uuid.UUID) error {
-	_, err := q.db.ExecContext(ctx, deleteCredential, id)
+	_, err := q.db.Exec(ctx, deleteCredential, id)
 	return err
 }
 
@@ -60,7 +60,7 @@ LIMIT 1
 // Parameters: id
 // Returns: Credential with the specified ID
 func (q *Queries) GetCredentialByID(ctx context.Context, id uuid.UUID) (Credential, error) {
-	row := q.db.QueryRowContext(ctx, getCredentialByID, id)
+	row := q.db.QueryRow(ctx, getCredentialByID, id)
 	var i Credential
 	err := row.Scan(
 		&i.ID,
@@ -85,7 +85,7 @@ WHERE owner_id = $1
 // Parameters: ownerID
 // Returns: List of credentials owned by the specified ID
 func (q *Queries) GetCredentialsByOwnerID(ctx context.Context, ownerID uuid.UUID) ([]Credential, error) {
-	rows, err := q.db.QueryContext(ctx, getCredentialsByOwnerID, ownerID)
+	rows, err := q.db.Query(ctx, getCredentialsByOwnerID, ownerID)
 	if err != nil {
 		return nil, err
 	}
@@ -108,9 +108,6 @@ func (q *Queries) GetCredentialsByOwnerID(ctx context.Context, ownerID uuid.UUID
 		}
 		items = append(items, i)
 	}
-	if err := rows.Close(); err != nil {
-		return nil, err
-	}
 	if err := rows.Err(); err != nil {
 		return nil, err
 	}
@@ -130,19 +127,19 @@ RETURNING id, email, website, category, owner_id, password_hash, health, created
 `
 
 type UpdateCredentialParams struct {
-	Email        string         `json:"email"`
-	Website      string         `json:"website"`
-	Category     sql.NullString `json:"category"`
-	PasswordHash string         `json:"password_hash"`
-	UpdatedAt    time.Time      `json:"updated_at"`
-	ID           uuid.UUID      `json:"id"`
+	Email        string      `json:"email"`
+	Website      string      `json:"website"`
+	Category     pgtype.Text `json:"category"`
+	PasswordHash string      `json:"password_hash"`
+	UpdatedAt    time.Time   `json:"updated_at"`
+	ID           uuid.UUID   `json:"id"`
 }
 
 // Update a credential by ID
 // Parameters: email, website, category, password_hash, updated_at, id
 // Returns: Updated credential
 func (q *Queries) UpdateCredential(ctx context.Context, arg UpdateCredentialParams) error {
-	_, err := q.db.ExecContext(ctx, updateCredential,
+	_, err := q.db.Exec(ctx, updateCredential,
 		arg.Email,
 		arg.Website,
 		arg.Category,

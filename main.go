@@ -9,6 +9,7 @@ import (
 	"log"
 	"net"
 
+	_ "github.com/jackc/pgx/v5"
 	_ "github.com/lib/pq"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"

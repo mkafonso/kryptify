@@ -1,18 +1,19 @@
 package store
 
 import (
-	"database/sql"
 	db "kryptify/db/sqlc"
+
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type PostgresRepository struct {
 	*db.Queries
-	DB *sql.DB
+	connectionPool *pgxpool.Pool
 }
 
-func NewPostgresRepository(database *sql.DB) *PostgresRepository {
+func NewPostgresRepository(connectionPool *pgxpool.Pool) *PostgresRepository {
 	return &PostgresRepository{
-		DB:      database,
-		Queries: db.New(database),
+		connectionPool: connectionPool,
+		Queries:        db.New(connectionPool),
 	}
 }

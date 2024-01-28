@@ -2,13 +2,13 @@ package store
 
 import (
 	"context"
-	"database/sql"
 	db "kryptify/db/sqlc"
 	"kryptify/entity"
 	valueobject "kryptify/entity/value-object"
 	"kryptify/util"
 
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 func (r *PostgresRepository) CreateCredential(ctx context.Context, credential *entity.Credential) error {
@@ -33,7 +33,7 @@ func (r *PostgresRepository) UpdateCredential(ctx context.Context, credentialID 
 		ID:           updatedCredential.ID,
 		Email:        updatedCredential.Email,
 		Website:      updatedCredential.Website,
-		Category:     sql.NullString{String: updatedCredential.Category, Valid: updatedCredential.Category != ""},
+		Category:     pgtype.Text{String: updatedCredential.Category, Valid: updatedCredential.Category != ""},
 		PasswordHash: string(updatedCredential.PasswordHash),
 		UpdatedAt:    updatedCredential.UpdatedAt,
 	}
