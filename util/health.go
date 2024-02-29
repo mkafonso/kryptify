@@ -1,4 +1,4 @@
-package valueobject
+package util
 
 type Health int16
 

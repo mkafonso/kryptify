@@ -1,7 +1,7 @@
 package entity
 
 import (
-	valueobject "kryptify/entity/value-object"
+	"kryptify/util"
 	"kryptify/val"
 	"time"
 
@@ -14,8 +14,8 @@ type Credential struct {
 	Website      string
 	Category     string
 	OwnerID      string
-	PasswordHash valueobject.Password
-	Health       valueobject.Health
+	PasswordHash util.Password
+	Health       util.Health
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
 }
@@ -25,8 +25,8 @@ func NewCredential(email, password, website, owner_id string) (*Credential, erro
 		return nil, err
 	}
 
-	hashedPassword := valueobject.NewPassword(password)
-	passwordHealth := valueobject.NewPasswordHealth(password)
+	hashedPassword := util.NewPassword(password)
+	passwordHealth := util.NewPasswordHealth(password)
 
 	credential := &Credential{
 		ID:           uuid.New(),

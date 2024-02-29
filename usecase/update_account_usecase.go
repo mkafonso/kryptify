@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 	"kryptify/entity"
-	valueobject "kryptify/entity/value-object"
 	"kryptify/repository"
 	appError "kryptify/usecase/error"
+	"kryptify/util"
 	"time"
 )
 
@@ -58,7 +58,7 @@ func (c *UpdateAccount) updateAccountDetails(account *entity.Account, data *Upda
 	}
 
 	if data.Password != "" {
-		account.PasswordHash = valueobject.NewPassword(data.Password)
+		account.PasswordHash = util.NewPassword(data.Password)
 	}
 
 	account.UpdatedAt = time.Now().UTC()

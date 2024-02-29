@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 	"kryptify/entity"
-	valueobject "kryptify/entity/value-object"
 	"kryptify/repository"
 	appError "kryptify/usecase/error"
+	"kryptify/util"
 	"time"
 )
 
@@ -75,7 +75,7 @@ func (u *UpdateCredential) updateCredentialDetails(credential *entity.Credential
 	}
 
 	if data.Password != "" {
-		credential.PasswordHash = valueobject.NewPassword(data.Password)
+		credential.PasswordHash = util.NewPassword(data.Password)
 	}
 
 	credential.UpdatedAt = time.Now().UTC()

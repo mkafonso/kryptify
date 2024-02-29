@@ -1,7 +1,7 @@
 package entity
 
 import (
-	valueobject "kryptify/entity/value-object"
+	"kryptify/util"
 	"kryptify/val"
 	"time"
 
@@ -14,7 +14,7 @@ type Account struct {
 	Email             string
 	AvatarUrl         string
 	IsAccountVerified bool
-	PasswordHash      valueobject.Password
+	PasswordHash      util.Password
 	CreatedAt         time.Time
 	UpdatedAt         time.Time
 }
@@ -24,7 +24,7 @@ func NewAccount(name, email, password string) (*Account, error) {
 		return nil, err
 	}
 
-	hashedPassword := valueobject.NewPassword(password)
+	hashedPassword := util.NewPassword(password)
 
 	account := &Account{
 		ID:                uuid.New(),
