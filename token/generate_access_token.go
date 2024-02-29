@@ -1,15 +1,14 @@
-package util
+package token
 
 import (
-	"kryptify/token"
 	"time"
 
 	"github.com/google/uuid"
 )
 
-func GenerateAccessToken(accountID uuid.UUID) (string, *token.Payload, error) {
+func GenerateAccessToken(accountID uuid.UUID) (string, *Payload, error) {
 	tokenSymmetricKey := "12345678123456781234567812345678"
-	tokenMaker, err := token.NewPasetoMaker(tokenSymmetricKey)
+	tokenMaker, err := NewPasetoMaker(tokenSymmetricKey)
 	if err != nil {
 		return "", nil, err
 	}
