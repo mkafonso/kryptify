@@ -1,8 +1,8 @@
 package entity
 
 import (
-	"kryptify/entity/validation"
 	valueobject "kryptify/entity/value-object"
+	"kryptify/val"
 	"time"
 
 	"github.com/google/uuid"
@@ -21,7 +21,7 @@ type Credential struct {
 }
 
 func NewCredential(email, password, website, owner_id string) (*Credential, error) {
-	if err := validation.ValidateCreateCredentialInput(email, password, website, owner_id); err != nil {
+	if err := val.CreateCredentialInput(email, password, website, owner_id); err != nil {
 		return nil, err
 	}
 

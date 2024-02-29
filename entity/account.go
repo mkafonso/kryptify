@@ -1,8 +1,8 @@
 package entity
 
 import (
-	"kryptify/entity/validation"
 	valueobject "kryptify/entity/value-object"
+	"kryptify/val"
 	"time"
 
 	"github.com/google/uuid"
@@ -20,7 +20,7 @@ type Account struct {
 }
 
 func NewAccount(name, email, password string) (*Account, error) {
-	if err := validation.ValidateCreateAccountInput(name, email, password); err != nil {
+	if err := val.CreateAccountInput(name, email, password); err != nil {
 		return nil, err
 	}
 
