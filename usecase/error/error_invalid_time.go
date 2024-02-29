@@ -1,4 +1,4 @@
-package usecase
+package appError
 
 type ErrorInvalidTime struct {
 	Message string

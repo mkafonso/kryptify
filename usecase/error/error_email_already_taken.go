@@ -1,4 +1,4 @@
-package usecase
+package appError
 
 type ErrorEmailAlreadyTaken struct {
 	Message string

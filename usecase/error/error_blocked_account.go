@@ -1,4 +1,4 @@
-package usecase
+package appError
 
 type ErrorBlockedAccount struct {
 	Message string
