@@ -14,22 +14,28 @@ import (
 )
 
 const createAccount = `-- name: CreateAccount :exec
-INSERT INTO accounts (name, email, password_hash)
-VALUES ($1, $2, $3)
+INSERT INTO accounts (id, name, email, password_hash)
+VALUES ($1, $2, $3, $4)
 RETURNING id, name, email, avatar_url, is_account_verified, password_hash, created_at, updated_at
 `
 
 type CreateAccountParams struct {
-	Name         string `json:"name"`
-	Email        string `json:"email"`
-	PasswordHash string `json:"password_hash"`
+	ID           uuid.UUID `json:"id"`
+	Name         string    `json:"name"`
+	Email        string    `json:"email"`
+	PasswordHash string    `json:"password_hash"`
 }
 
 // Create a new account
-// Parameters: name, email, password_hash
+// Parameters: id, name, email, password_hash
 // Returns: Newly created account
 func (q *Queries) CreateAccount(ctx context.Context, arg CreateAccountParams) error {
-	_, err := q.db.Exec(ctx, createAccount, arg.Name, arg.Email, arg.PasswordHash)
+	_, err := q.db.Exec(ctx, createAccount,
+		arg.ID,
+		arg.Name,
+		arg.Email,
+		arg.PasswordHash,
+	)
 	return err
 }
 

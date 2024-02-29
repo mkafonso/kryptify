@@ -1,9 +1,9 @@
 -- Create a new credential
--- Parameters: email, password_hash, website, owner_id
+-- Parameters: id, email, password_hash, website, owner_id
 -- Returns: Newly created credential
 -- name: CreateCredential :exec
-INSERT INTO credentials (email, password_hash, website, owner_id)
-VALUES ($1, $2, $3, $4)
+INSERT INTO credentials (id, email, password_hash, website, owner_id)
+VALUES ($1, $2, $3, $4, $5)
 RETURNING *;
 
 -- Delete a credential by ID

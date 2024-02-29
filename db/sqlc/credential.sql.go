@@ -14,12 +14,13 @@ import (
 )
 
 const createCredential = `-- name: CreateCredential :exec
-INSERT INTO credentials (email, password_hash, website, owner_id)
-VALUES ($1, $2, $3, $4)
+INSERT INTO credentials (id, email, password_hash, website, owner_id)
+VALUES ($1, $2, $3, $4, $5)
 RETURNING id, email, website, category, owner_id, password_hash, health, created_at, updated_at
 `
 
 type CreateCredentialParams struct {
+	ID           uuid.UUID `json:"id"`
 	Email        string    `json:"email"`
 	PasswordHash string    `json:"password_hash"`
 	Website      string    `json:"website"`
@@ -27,10 +28,11 @@ type CreateCredentialParams struct {
 }
 
 // Create a new credential
-// Parameters: email, password_hash, website, owner_id
+// Parameters: id, email, password_hash, website, owner_id
 // Returns: Newly created credential
 func (q *Queries) CreateCredential(ctx context.Context, arg CreateCredentialParams) error {
 	_, err := q.db.Exec(ctx, createCredential,
+		arg.ID,
 		arg.Email,
 		arg.PasswordHash,
 		arg.Website,

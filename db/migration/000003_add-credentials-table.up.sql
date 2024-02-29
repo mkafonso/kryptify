@@ -1,9 +1,6 @@
--- Enable the uuid-ossp extension if not already enabled
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
 -- Create the 'credentials' table with an index on the 'id' column
 CREATE TABLE IF NOT EXISTS credentials (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  id UUID PRIMARY KEY,
   email VARCHAR(255) NOT NULL,
   website VARCHAR(255) NOT NULL,
   category VARCHAR(255),

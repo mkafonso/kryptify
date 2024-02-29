@@ -1,9 +1,9 @@
 -- Create a new account
--- Parameters: name, email, password_hash
+-- Parameters: id, name, email, password_hash
 -- Returns: Newly created account
 -- name: CreateAccount :exec
-INSERT INTO accounts (name, email, password_hash)
-VALUES ($1, $2, $3)
+INSERT INTO accounts (id, name, email, password_hash)
+VALUES ($1, $2, $3, $4)
 RETURNING *;
 
 -- Find an account by email
